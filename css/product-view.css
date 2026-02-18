@@ -6,16 +6,6 @@ main {
     width: 100%;
 }
 
-aside nav ul li a[href="cart.html"],
-aside nav ul li a[href="dashboard.html"] {
-    background-color: transparent; 
-}
-
-aside nav ul li a[href="cart.html"].active,
-aside nav ul li a[href="dashboard.html"].active {
-    background-color: transparent;
-}
-
 .product-container {
     flex: 1;
     width: auto;
@@ -226,6 +216,12 @@ aside nav ul li a[href="dashboard.html"].active {
 
 .quantity-container button:hover {
     background: #f3eadf;
+}
+
+.quantity-container button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f7f1ea;
 }
 
 .quantity-container input {

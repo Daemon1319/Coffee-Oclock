@@ -18,10 +18,16 @@ const modalCloseBtn = modalContainer.querySelector('.close-btn');
 
 const paymentForm = document.getElementById('paymentForm');
 const shippingInfoForm = document.getElementById('shippingForm');
+const checkoutMethodInputs = document.querySelectorAll('input[name="checkout-method"]');
 const cardNameInput = document.getElementById('card-name');
 const cardNumberInput = document.getElementById('card-number');
 const expirationInput = document.getElementById('expiration');
 const cvcInput = document.getElementById('cvc');
+const cardDetailsFields = document.getElementById('card-details-fields');
+const nonCardMessage = document.getElementById('non-card-message');
+const paymentDetailsTitle = document.getElementById('payment-details-title');
+const cardBrandLogo = document.getElementById('card-brand-logo');
+const payButton = document.querySelector('#paymentForm .pay-button');
 
 const SHIPPING_FEE = 49;
 
@@ -203,6 +209,11 @@ function validateCvc() {
 }
 
 function validatePaymentForm() {
+    const selectedMethod = getSelectedCheckoutMethod();
+    if (!isCardMethod(selectedMethod)) {
+        return true;
+    }
+
     const validators = [
         { input: cardNameInput, validate: validateCardName },
         { input: cardNumberInput, validate: validateCardNumber },
@@ -221,6 +232,67 @@ function validatePaymentForm() {
     });
 
     return isValid;
+}
+
+function getSelectedCheckoutMethod() {
+    const selected = document.querySelector('input[name="checkout-method"]:checked');
+    return selected ? selected.value : 'cod';
+}
+
+function isCardMethod(method) {
+    return method === 'card';
+}
+
+function setCardFieldRequired(isRequired) {
+    [cardNameInput, cardNumberInput, expirationInput, cvcInput].forEach((input) => {
+        if (!input) return;
+        input.required = isRequired;
+        input.setCustomValidity('');
+    });
+}
+
+function clearCardFields() {
+    [cardNameInput, cardNumberInput, expirationInput, cvcInput].forEach((input) => {
+        if (!input) return;
+        input.value = '';
+        input.setCustomValidity('');
+    });
+}
+
+function updateCheckoutMethodUI(method) {
+    const selectedMethod = method || getSelectedCheckoutMethod();
+    const needsCard = isCardMethod(selectedMethod);
+
+    if (cardDetailsFields) {
+        cardDetailsFields.style.display = needsCard ? 'flex' : 'none';
+    }
+
+    if (nonCardMessage) {
+        nonCardMessage.classList.toggle('show', !needsCard);
+        if (selectedMethod === 'cod') {
+            nonCardMessage.textContent = 'Cash on Delivery selected. Please prepare the exact amount upon delivery.';
+        } else if (selectedMethod === 'gcash') {
+            nonCardMessage.textContent = 'GCash selected. You can complete payment after placing the order.';
+        }
+    }
+
+    if (paymentDetailsTitle) {
+        paymentDetailsTitle.textContent = needsCard ? 'Card Details' : 'Payment Details';
+    }
+
+    if (cardBrandLogo) {
+        cardBrandLogo.style.display = needsCard ? 'block' : 'none';
+    }
+
+    if (payButton) {
+        payButton.textContent = needsCard ? 'Pay' : 'Place Order';
+    }
+
+    if (!needsCard) {
+        clearCardFields();
+    }
+
+    setCardFieldRequired(needsCard);
 }
 
 if (cardNumberInput) {
@@ -256,6 +328,16 @@ if (cardNameInput) {
         validatePaymentForm();
     });
 });
+
+if (checkoutMethodInputs.length > 0) {
+    checkoutMethodInputs.forEach((input) => {
+        input.addEventListener('change', function () {
+            updateCheckoutMethodUI(this.value);
+        });
+    });
+}
+
+updateCheckoutMethodUI();
 
 // cart logic
 function loadCart() {
@@ -407,6 +489,8 @@ if (paymentForm) {
     paymentForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        const selectedMethod = getSelectedCheckoutMethod();
+
         if (!validatePaymentForm()) {
             return;
         }
@@ -420,7 +504,13 @@ if (paymentForm) {
         loadCart();
 
         // Show Success Notification
-        showNotification("Order Successful!", "Your order has been placed successfully.");
+        const methodLabelMap = {
+            gcash: 'GCash',
+            card: 'Credit/Debit Card',
+            cod: 'Cash on Delivery'
+        };
+        const methodLabel = methodLabelMap[selectedMethod] || 'your selected method';
+        showNotification("Order Successful!", `Your order has been placed successfully via ${methodLabel}.`);
     });
 }
 

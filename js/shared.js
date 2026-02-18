@@ -109,6 +109,28 @@ function initHamburgerMenu() {
     }
 }
 
+/* ============= SIDENAV ACTIVE STATE ============= */
+
+function initSideNavActiveState() {
+    const navLinks = document.querySelectorAll('aside nav ul li a[href]');
+    if (!navLinks.length) return;
+
+    const currentPage = (window.location.pathname.split('/').pop() || '').toLowerCase();
+
+    navLinks.forEach(function (link) {
+        const href = (link.getAttribute('href') || '').split('?')[0];
+        const linkPage = href.split('/').pop().toLowerCase();
+
+        link.classList.remove('active');
+        link.removeAttribute('aria-current');
+
+        if (linkPage && linkPage === currentPage) {
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
+        }
+    });
+}
+
 /* ============= NOTIFICATION MODAL ============= */
 
 /*  
@@ -329,6 +351,7 @@ function loadModals() {
 document.addEventListener("DOMContentLoaded", function () {
     loadModals();
     initHamburgerMenu();
+    initSideNavActiveState();
     updateCartCountBadge();
 
     window.addEventListener('storage', function (event) {

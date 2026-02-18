@@ -154,28 +154,47 @@
             <button class="close-btn" type="button">&times;</button>
             <div>
                 <img src="assets/img/coffee-oclock.png" alt="Brand logo">
-                <img src="assets/img/visa-mastercard.png" alt="Visa and Mastercard logo">
+                <img id="card-brand-logo" src="assets/img/visa-mastercard.png" alt="Visa and Mastercard logo">
             </div>
             <form id="paymentForm">
-                <span>Card Details</span>
-                <div class="checkout-form-column">
-                    <div class="input-group">
-                        <input id="card-name" name="card-name" type="text" required minlength="2" maxlength="50" autocomplete="cc-name" pattern="[A-Za-z][A-Za-z .'-]*" title="Card name should only contain letters, spaces, apostrophes, periods, and hyphens">
-                        <label for="card-name">Card Name</label>
-                    </div>
-                    <div class="input-group">
-                        <input id="card-number" name="card-number" type="text" required inputmode="numeric" maxlength="19" autocomplete="cc-number" pattern="(?:\d{4} ?){3}\d{4}" title="Card number must be 16 digits">
-                        <label for="card-number">Card Number</label>
-                    </div>
+                <div class="payment-method-options" role="group" aria-label="Payment method">
+                    <label>
+                        <input type="radio" name="checkout-method" value="gcash">
+                        <span>GCash</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="checkout-method" value="card">
+                        <span>Credit/Debit</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="checkout-method" value="cod" checked>
+                        <span>Cash on Delivery</span>
+                    </label>
                 </div>
-                <div class="checkout-form-row">
-                    <div class="input-group half-width">
-                        <input id="expiration" name="expiration" type="text" required inputmode="numeric" maxlength="5" autocomplete="cc-exp" pattern="(0[1-9]|1[0-2])\/\d{2}" title="Use MM/YY format">
-                        <label for="expiration">Expiration</label>
+
+                <span id="payment-details-title">Payment Details</span>
+                <p id="non-card-message" class="non-card-message">No card needed. You can complete this order using the selected method.</p>
+
+                <div id="card-details-fields">
+                    <div class="checkout-form-column">
+                        <div class="input-group">
+                            <input id="card-name" name="card-name" type="text" required minlength="2" maxlength="50" autocomplete="cc-name" pattern="[A-Za-z][A-Za-z .'-]*" title="Card name should only contain letters, spaces, apostrophes, periods, and hyphens">
+                            <label for="card-name">Card Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input id="card-number" name="card-number" type="text" required inputmode="numeric" maxlength="19" autocomplete="cc-number" pattern="(?:\d{4} ?){3}\d{4}" title="Card number must be 16 digits">
+                            <label for="card-number">Card Number</label>
+                        </div>
                     </div>
-                    <div class="input-group half-width">
-                        <input id="cvc" name="cvc" type="text" required inputmode="numeric" maxlength="4" autocomplete="cc-csc" pattern="\d{3,4}" title="CVC must be 3 or 4 digits">
-                        <label for="cvc">CVC</label>
+                    <div class="checkout-form-row">
+                        <div class="input-group half-width">
+                            <input id="expiration" name="expiration" type="text" required inputmode="numeric" maxlength="5" autocomplete="cc-exp" pattern="(0[1-9]|1[0-2])\/\d{2}" title="Use MM/YY format">
+                            <label for="expiration">Expiration</label>
+                        </div>
+                        <div class="input-group half-width">
+                            <input id="cvc" name="cvc" type="text" required inputmode="numeric" maxlength="4" autocomplete="cc-csc" pattern="\d{3,4}" title="CVC must be 3 or 4 digits">
+                            <label for="cvc">CVC</label>
+                        </div>
                     </div>
                 </div>
 

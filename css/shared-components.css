@@ -48,14 +48,19 @@ aside nav ul li a {
     height: 40px;
     padding: 10px;
     border-radius: 5px;
-    background-color: #f7f2ec;
+    background-color: transparent;
     text-align: center;
+    transition: all 0.3s ease-out;
 }
 
 aside nav ul li a:hover {
-    transition: all 0.3s ease-out;
     background-color: rgb(222, 208, 194);
     transform: scale(1.08);
+}
+
+aside nav ul li a.active,
+aside nav ul li a[aria-current="page"] {
+    background-color: #f7f2ec;
 }
 
 aside nav ul li a img {

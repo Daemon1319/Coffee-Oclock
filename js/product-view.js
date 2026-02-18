@@ -5,6 +5,7 @@ const productMeta = document.getElementById("productMeta");
 const productPrice = document.getElementById("productPrice");
 const productDescription = document.getElementById("productDescription");
 const totalPrice = document.getElementById("totalPrice");
+const decreaseQtyBtn = document.getElementById("qty-decrease-btn");
 
 
 // ============== Selected Item ====================
@@ -52,6 +53,12 @@ function updateTotalPrice() {
     totalPrice.innerText = getTotalPrice().toFixed(2);
 }
 
+function updateQuantityControls() {
+    if (!decreaseQtyBtn) return;
+
+    decreaseQtyBtn.disabled = getQty() <= 1;
+}
+
 /*  
 * DOCU: Displays the selected product details on the product view page.
 * It retrieves the product ID from the URL, finds the matching product
@@ -82,6 +89,7 @@ function displaySelectedProduct() {
     productMeta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
     productPrice.innerText = Number(product.price).toFixed(2);
     updateTotalPrice();
+    updateQuantityControls();
 
     if (productDescription) {
         productDescription.innerText = product.description || "";
@@ -275,7 +283,10 @@ function addToCart() {
  */
 
 function getQty() {
-    return Math.max(1, parseInt(document.getElementById("qty").value, 10) || 1);
+    const qtyInput = document.getElementById("product-qty");
+    if (!qtyInput) return 1;
+
+    return Math.max(1, parseInt(qtyInput.value, 10) || 1);
 }
 
 /*
@@ -289,12 +300,20 @@ function getQty() {
  * Last Updated By: Kerzania
  */
 function changeQty(step) {
-    document.getElementById("qty").value = Math.max(1, getQty() + step);
+    const qtyInput = document.getElementById("product-qty");
+    if (!qtyInput) return;
+
+    const currentQty = getQty();
+    const nextQty = Math.max(1, currentQty + step);
+
+    qtyInput.value = nextQty;
     updateTotalPrice();
+    updateQuantityControls();
 }
 
 displaySelectedProduct();
 displaySimilarItems();
+updateQuantityControls();
 
 /*  
  * DOCU: Implements live search functionality for products.
