@@ -1,10 +1,8 @@
-/* ============= DASHBOARD-SPECIFIC MODAL BLUR ============= */
 body.modal-open> :not(#signup-modal-container):not(#login-modal-container) {
     filter: blur(3px);
     transition: filter 0.2s ease;
 }
 
-/* ============= MAIN CONTENT ============= */
 main {
     display: flex;
     align-items: flex-start;
@@ -12,7 +10,15 @@ main {
     padding: 0 24px 26px;
 }
 
-/* ============= CATEGORIES (DESKTOP LIKE IMAGE 1) ============= */
+nav ul li a[href="cart.html"] {
+    background-color: transparent; 
+}
+
+aside nav ul li a[href="cart.html"] {
+    background-color: transparent; 
+}
+
+
 .categories-container {
     width: 270px;
     flex-shrink: 0;
@@ -95,7 +101,6 @@ main {
     color: #fff;
 }
 
-/* ============= PRODUCT AREA ============= */
 .product-container {
     flex: 1;
     min-width: 0;
@@ -118,7 +123,6 @@ main {
     opacity: 0.7;
 }
 
-/* Desktop grid like image 1 */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -136,7 +140,6 @@ main {
     font-weight: 600;
 }
 
-/* Card style closer to image 1 */
 .product-card {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #ead8c8;
@@ -242,6 +245,8 @@ main {
     cursor: not-allowed;
 }
 
+<<<<<<< HEAD
+=======
 .add-to-cart-btn {
     margin-top: 10px;
     width: 100%;
@@ -265,8 +270,8 @@ main {
    - tablet = 3 cards
    - phone  = 2 cards
 ========================================================= */
+>>>>>>> a996fdca3c53986789cbd7fbddeef0dfca5021a3
 
-/* ===== TABLET (768 - 1024): 3 cards + horizontal categories ===== */
 @media (min-width: 768px) and (max-width: 1024px) {
     main {
         flex-direction: column;

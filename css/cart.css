@@ -9,6 +9,10 @@
     --color-coffee-light: #f7f2ec;
     --form-bg: #f9f6f2;
 }
+nav ul li a[href="dashboard.html"] {
+    background-color: transparent; 
+}
+
 
 /* ================= MODAL BLUR (cart-specific: excludes checkout + auth modals) ================= */
 body.modal-open> :not(#check-out-modal-container):not(#signup-modal-container):not(#login-modal-container) {
