@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const userData = {
                 firstName: firstName,
                 lastName: "",
-                fullName: fullName,
+                fullName: firstName,
                 email: email.value.trim(),
                 password: password.value // Store password for simulation
             };
