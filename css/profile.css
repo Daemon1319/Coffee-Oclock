@@ -264,4 +264,6 @@ button {
     color: white;
 }
 
-
+#passwordForm {
+    margin-top: 40px;
+}

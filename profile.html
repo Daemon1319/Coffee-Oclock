@@ -36,8 +36,8 @@
                 <div class="user-container hidden" id="user-profile">
                     <span id="user-display-name"></span>
                     <div class="dropdown">
-                        <a href="profile.html"><img src="" alt="User Profile" class="avatar" id="avatar"></a>
-                        <div class="dropdown-content" id="dropdownMenu">
+                        <a href="profile.html"><img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="user-avatar"></a>
+                        <div class="dropdown-content" id="user-dropdown-menu">
                             <button type="button" id="logout-btn">Logout</button>
                         </div>
                     </div>
@@ -63,23 +63,18 @@
             <form id="profileForm">
 
                 <div class="form-group">
-                    <label for="fullname">Full Name</label>
-                    <input type="text" name="fullname" id="fullname" value="">
+                    <label for="first-name">First Name</label>
+                    <input type="text" name="first-name" id="first-name" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" name="last-name" id="last-name" value="">
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" name="email" id="email" value="">
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="text" name="phone" id="phone" value="">
-                </div>
-
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username" value="">
                 </div>
 
                 <button type="submit" class="btn-primary">Save Changes</button>
@@ -95,19 +90,25 @@
 
             <form id="passwordForm">
 
-                <div class="form-group">
-                    <label for="current_password">Current Password</label>
+                <div class="input-group">
                     <input type="password" name="current_password" id="current_password">
+                    <label for="current_password">Current Password</label>
+                    <button type="button" class="toggle-password" data-target="current_password">Show</button>
+                    <small class="error"></small>
                 </div>
 
-                <div class="form-group">
-                    <label for="new_password">New Password</label>
+                <div class="input-group">
                     <input type="password" name="new_password" id="new_password">
+                    <label for="new_password">New Password</label>
+                    <button type="button" class="toggle-password" data-target="new_password">Show</button>
+                    <small class="error"></small>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirm_password">Confirm New Password</label>
+                <div class="input-group">
                     <input type="password" name="confirm_password" id="confirm_password">
+                    <label for="confirm_password">Confirm New Password</label>
+                    <button type="button" class="toggle-password" data-target="confirm_password">Show</button>
+                    <small class="error"></small>
                 </div>
 
                 <button type="submit" class="btn-secondary">Update Password</button>

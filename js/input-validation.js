@@ -10,7 +10,30 @@
 
 const urlParams = new URLSearchParams(window.location.search);
 const userName = urlParams.get("user");
-let currentUser = userName ? { firstName: userName } : null;
+
+// Try to get user data from sessionStorage first
+let userData = null;
+try {
+    const storedUser = sessionStorage.getItem("organic_shop_user");
+    if (storedUser) {
+        userData = JSON.parse(storedUser);
+    }
+} catch (e) {
+    console.error("Failed to parse user data", e);
+}
+
+// If user Param is present but no sessionStorage, initialize session storage
+if (userName && !userData) {
+    userData = {
+        firstName: userName,
+        lastName: "",
+        fullName: userName,
+        email: userName.toLowerCase() + "@example.com"
+    };
+    sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
+}
+
+let currentUser = userData || (userName ? { firstName: userName } : null);
 
 /*  
  * DOCU: Finds the error element associated with a given input field.
@@ -150,6 +173,19 @@ function updateAuthUI() {
         if (authLinks) authLinks.classList.add("hidden");
         if (userProfile) userProfile.classList.remove("hidden");
         if (userDisplayName) userDisplayName.textContent = currentUser.firstName;
+        
+        // Ensure "My Profile" link exists in dropdown
+        const dropdownMenu = document.getElementById("user-dropdown-menu") || document.getElementById("dropdownMenu");
+        if (dropdownMenu && !document.getElementById("profile-link")) {
+            const profileLink = document.createElement("a");
+            profileLink.id = "profile-link";
+            profileLink.href = "profile.html";
+            profileLink.textContent = "My Profile";
+            dropdownMenu.insertBefore(profileLink, dropdownMenu.firstChild);
+            
+            // Re-run updateLinksWithUser to ensure the new link has the user param
+            updateLinksWithUser();
+        }
     } else {
         if (authLinks) authLinks.classList.remove("hidden");
         if (userProfile) userProfile.classList.add("hidden");
@@ -219,8 +255,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!isValid) return;
 
+            // Save user info to sessionStorage for prefilling profile
+            const userData = {
+                firstName: firstName.value.trim(),
+                lastName: lastName.value.trim(),
+                fullName: `${firstName.value.trim()} ${lastName.value.trim()}`,
+                email: email.value.trim(),
+                password: password.value // Store password for simulation
+            };
+            sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
+
             const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set("user", firstName.value.trim());
+            currentUrl.searchParams.set("user", userData.firstName);
             window.location.href = currentUrl.toString();
         });
     }
@@ -237,6 +283,17 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!isValid) return;
 
             const firstName = email.value.split("@")[0];
+            
+            // Save mock user info to sessionStorage for prefilling profile
+            const userData = {
+                firstName: firstName,
+                lastName: "",
+                fullName: firstName,
+                email: email.value.trim(),
+                password: password.value // Store password for simulation
+            };
+            sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
+
             const currentUrl = new URL(window.location.href);
             currentUrl.searchParams.set("user", firstName);
             window.location.href = currentUrl.toString();
@@ -249,6 +306,7 @@ document.addEventListener("DOMContentLoaded", function () {
         logoutBtn.addEventListener("click", function (e) {
             e.preventDefault();
             showNotification("Logged Out", "You have been logged out.", "info", function () {
+                sessionStorage.removeItem("organic_shop_user"); // Clear user info on logout
                 const currentUrl = new URL(window.location.href);
                 currentUrl.searchParams.delete("user");
                 window.location.href = currentUrl.toString();
