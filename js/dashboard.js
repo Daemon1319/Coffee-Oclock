@@ -228,8 +228,7 @@ function renderProducts(products) {
         name.innerText = product.name;
         meta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
         price.innerText = `₱${Number(product.price).toFixed(2)}`;
-        addToCartBtn.innerHTML = '<i class="bi bi-cup-hot"></i> Add to Order';
-        addToCartBtn.setAttribute("aria-label", `Add ${product.name} to order`);
+        addToCartBtn.innerText = "Add to Cart";
         addToCartBtn.addEventListener("click", function (event) {
             event.preventDefault();
             event.stopPropagation();
