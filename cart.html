@@ -35,7 +35,7 @@
         </nav>
     </aside>
 
-    <div class="overlay" id="overlay"></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <div class="page-content">
         <header>
@@ -46,22 +46,22 @@
                         <i class="bi bi-list"></i>
                     </button>
 
-                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="dashboard-logo">
+                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="brand-icon">
                     <p>It's always <strong>Coffee O'clock</strong></p>
                 </div>
 
                 <!-- RIGHT: auth OR user -->
                 <div class="header-actions">
-                    <div class="link-container" id="auth-links">
+                    <div class="auth-link-container" id="auth-links">
                         <button type="button" class="signup-link">SIGN UP</button>
                         <button type="button" class="login-link">LOGIN</button>
                     </div>
 
                     <div class="user-container hidden" id="user-profile">
                         <span id="user-display-name"></span>
-                        <div class="dropdown">
-                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="avatar">
-                            <div class="dropdown-content" id="dropdownMenu">
+                        <div class="user-dropdown">
+                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="user-avatar">
+                            <div class="user-dropdown-menu" id="user-dropdown-menu">
                                 <button type="button" id="logout-btn">Logout</button>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                     </ul>
                 </section>
 
-                <div class="ship-side">
+                <div class="cart-sidebar">
                     <section class="shipping">
                         <h2>Shipping Information</h2>
                         <form id="shippingForm">
@@ -158,7 +158,7 @@
             </div>
             <form id="paymentForm">
                 <span>Card Details</span>
-                <div class="column">
+                <div class="checkout-form-column">
                     <div class="input-group">
                         <input id="card-name" name="card-name" type="text" required minlength="2" maxlength="50" autocomplete="cc-name" pattern="[A-Za-z][A-Za-z .'-]*" title="Card name should only contain letters, spaces, apostrophes, periods, and hyphens">
                         <label for="card-name">Card Name</label>
@@ -168,7 +168,7 @@
                         <label for="card-number">Card Number</label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="checkout-form-row">
                     <div class="input-group half-width">
                         <input id="expiration" name="expiration" type="text" required inputmode="numeric" maxlength="5" autocomplete="cc-exp" pattern="(0[1-9]|1[0-2])\/\d{2}" title="Use MM/YY format">
                         <label for="expiration">Expiration</label>
@@ -181,7 +181,7 @@
 
                 <div class="underline"></div>
 
-                <div class="total">
+                <div class="checkout-total">
                     <span>Total Amount:</span>
                     <span id="total-amount-modal">₱100</span>
                 </div>

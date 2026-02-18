@@ -9,6 +9,10 @@
     --color-coffee-light: #f7f2ec;
     --form-bg: #f9f6f2;
 }
+nav ul li a[href="dashboard.html"] {
+    background-color: transparent; 
+}
+
 
 /* ================= MODAL BLUR (cart-specific: excludes checkout + auth modals) ================= */
 body.modal-open> :not(#check-out-modal-container):not(#signup-modal-container):not(#login-modal-container) {
@@ -34,7 +38,7 @@ main {
     min-width: 0;
 }
 
-.ship-side {
+.cart-sidebar {
     flex: 1;
     min-width: 0;
     width: 100%;
@@ -255,7 +259,7 @@ img.brand-logo {
 }
 
 /* ================= SHIPPING & ORDER SUMMARY CARDS ================= */
-.ship-side section {
+.cart-sidebar section {
     background: var(--color-white);
     padding: 28px;
     border-radius: 16px;
@@ -370,7 +374,7 @@ img.brand-logo {
         gap: 18px;
     }
 
-    .ship-side {
+    .cart-sidebar {
         max-width: 100%;
     }
 
@@ -395,7 +399,7 @@ img.brand-logo {
     }
 
     .cart-items,
-    .ship-side {
+    .cart-sidebar {
         width: 100%;
         max-width: 100%;
     }
@@ -405,7 +409,7 @@ img.brand-logo {
         border-radius: 14px;
     }
 
-    .ship-side section {
+    .cart-sidebar section {
         padding: 20px;
         border-radius: 14px;
     }

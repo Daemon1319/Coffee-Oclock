@@ -1,6 +1,6 @@
 // Constants
 const productContainer = document.querySelector(".product-grid");
-const productLength = document.querySelector(".count");
+const productLength = document.querySelector(".product-count");
 const paginationContainer = document.querySelector(".pagination");
 
 const categoryList = document.getElementById("categories-list");
@@ -425,3 +425,22 @@ function renderPagination(totalPages, activePage, productList) {
 
 goToPage(1);
 updateCartCountBadge();
+
+function forceNavLinksTransparent() {
+    const links = document.querySelectorAll('aside nav ul li a[href="cart.html"]');
+    links.forEach(link => {
+        link.style.backgroundColor = "transparent"; // inline style
+    });
+}
+
+// Run on initial load
+forceNavLinksTransparent();
+
+// Observe the aside element for any changes (like login re-rendering links)
+const aside = document.querySelector("aside nav ul");
+if (aside) {
+    const observer = new MutationObserver(() => {
+        forceNavLinksTransparent();
+    });
+    observer.observe(aside, { childList: true, subtree: true });
+}

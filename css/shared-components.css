@@ -89,17 +89,12 @@ header>div {
     gap: 8px;
 }
 
-.dashboard-logo {
+.brand-icon {
     width: 30px;
 }
 
-.user-profile {
-    width: 50px;
-    border-radius: 50%;
-}
-
 /* ============= AUTH LINKS ============= */
-.link-container {
+.auth-link-container {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -130,7 +125,7 @@ header>div {
     gap: 15px;
 }
 
-.dropdown {
+.user-dropdown {
     position: relative;
     display: inline-block;
 }
@@ -142,7 +137,7 @@ header>div {
     cursor: pointer;
 }
 
-.dropdown-content {
+.user-dropdown-menu {
     display: none;
     position: absolute;
     right: 0;
@@ -154,7 +149,7 @@ header>div {
     z-index: 10;
 }
 
-.dropdown-content button {
+.user-dropdown-menu button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -166,7 +161,7 @@ header>div {
     cursor: pointer;
 }
 
-.dropdown-content button:hover {
+.user-dropdown-menu button:hover {
     background-color: #f2f2f2;
 }
 
@@ -221,7 +216,7 @@ a.cart-btn:hover {
 }
 
 /* ============= HAMBURGER MENU ============= */
-.overlay {
+.sidebar-overlay {
     display: none;
     position: fixed;
     inset: 0;
@@ -276,7 +271,7 @@ a.cart-btn:hover {
         transform: translateX(0);
     }
 
-    body.menu-open .overlay {
+    body.menu-open .sidebar-overlay {
         display: block;
     }
 
@@ -331,7 +326,7 @@ a.cart-btn:hover {
         transform: translateX(0);
     }
 
-    body.menu-open .overlay {
+    body.menu-open .sidebar-overlay {
         display: block;
     }
 
