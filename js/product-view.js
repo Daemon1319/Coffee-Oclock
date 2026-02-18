@@ -39,7 +39,16 @@ function getProductIdFromURL() {
     return null;
 }
 
-
+/*  
+* DOCU: Computes the total price based on selected product unit price and quantity.
+*  
+* @param {none} - This function does not accept any parameter.
+* @returns {number} - Returns the computed total amount.
+* @throws {none} - This function does not explicitly throw errors.
+*
+* Last Updated: 2026-02-19  
+* Author: Kerzania  
+*/
 function getTotalPrice() {
     const unitPrice = parseFloat(productPrice.innerText);
     const safeUnitPrice = Number.isFinite(unitPrice) ? unitPrice : 0;
@@ -49,13 +58,32 @@ function getTotalPrice() {
     return total;
 }
 
+/*  
+* DOCU: Updates the displayed total price in the product view.
+*  
+* @param {none} - This function does not accept any parameter.
+* @returns {void} - This function does not return a value.
+* @throws {none} - This function does not explicitly throw errors.
+*
+* Last Updated: 2026-02-19  
+* Author: Kerzania  
+*/
 function updateTotalPrice() {
     totalPrice.innerText = getTotalPrice().toFixed(2);
 }
 
+/*  
+* DOCU: Enables or disables the decrease quantity button based on current quantity.
+*  
+* @param {none} - This function does not accept any parameter.
+* @returns {void} - This function does not return a value.
+* @throws {none} - This function does not explicitly throw errors.
+*
+* Last Updated: 2026-02-19  
+* Author: Kerzania  
+*/
 function updateQuantityControls() {
     if (!decreaseQtyBtn) return;
-
     decreaseQtyBtn.disabled = getQty() <= 1;
 }
 
@@ -73,7 +101,6 @@ function updateQuantityControls() {
 */
 function displaySelectedProduct() {
     const productId = getProductIdFromURL();
-
     const product = findProductById(productId);
 
     if (!product) {

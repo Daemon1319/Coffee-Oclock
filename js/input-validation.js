@@ -35,6 +35,158 @@ if (userName && !userData) {
 
 let currentUser = userData || (userName ? { firstName: userName } : null);
 
+// Run auth UI immediately (header exists in static HTML)
+updateAuthUI();
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Forms are now injected by shared.js, so query them here
+    const signupForm = document.getElementById("signup-form");
+    const loginForm = document.getElementById("login-form");
+
+    // Signup form submission
+    if (signupForm) {
+        signupForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById("first-name");
+            const lastName = document.getElementById("last-name");
+            const email = document.getElementById("email");
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirm-password");
+
+            let isValid = true;
+
+            isValid = validateRequired(firstName, "First name is required") && isValid;
+            isValid = validateRequired(lastName, "Last name is required") && isValid;
+            isValid = validateEmail(email) && isValid;
+            isValid = validatePassword(password) && isValid;
+            isValid = validateRequired(confirmPassword, "Confirm password is required") && isValid;
+
+            if (confirmPassword.value.trim() !== "" && password.value.trim() !== "") {
+                isValid = confirmPassword.value === password.value ? clearError(confirmPassword) && isValid : showError(confirmPassword, "Passwords do not match") && isValid;
+            }
+
+            if (!isValid) return;
+
+            // Save user info to sessionStorage for prefilling profile
+            const userData = {
+                firstName: firstName.value.trim(),
+                lastName: lastName.value.trim(),
+                fullName: `${firstName.value.trim()} ${lastName.value.trim()}`,
+                email: email.value.trim(),
+                password: password.value // Store password for simulation
+            };
+            sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("user", userData.firstName);
+            window.location.href = currentUrl.toString();
+        });
+    }
+
+    // Login form submission
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("login-email");
+            const password = document.getElementById("login-password");
+
+            let isValid = validateEmail(email) && validatePassword(password);
+            if (!isValid) return;
+
+            const firstName = email.value.split("@")[0];
+            
+            // Save mock user info to sessionStorage for prefilling profile
+            const userData = {
+                firstName: firstName,
+                lastName: "",
+                fullName: fullName,
+                email: email.value.trim(),
+                password: password.value // Store password for simulation
+            };
+            sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("user", firstName);
+            window.location.href = currentUrl.toString();
+        });
+    }
+
+    // Logout
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            showNotification("Logged Out", "You have been logged out.", "info", function () {
+                sessionStorage.removeItem("organic_shop_user"); // Clear user info on logout
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.delete("user");
+                window.location.href = currentUrl.toString();
+            });
+        });
+    }
+
+    // Avatar dropdown (works across pages with different wrappers)
+    const avatar = document.getElementById("user-avatar");
+    const dropdownMenu = document.getElementById("user-dropdown-menu");
+    const userDisplayName = document.getElementById("user-display-name");
+
+    if (avatar && dropdownMenu) {
+        const dropdownWrapper = avatar.closest(".user-dropdown") || avatar.closest(".dropdown") || avatar.parentElement;
+
+        function toggleUserDropdown(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            dropdownMenu.classList.toggle("show");
+        }
+
+        avatar.addEventListener("click", toggleUserDropdown);
+
+        if (userDisplayName) {
+            userDisplayName.addEventListener("click", toggleUserDropdown);
+        }
+
+        dropdownMenu.addEventListener("click", function (e) {
+            e.stopPropagation();
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!dropdownWrapper || !dropdownWrapper.contains(e.target)) {
+                dropdownMenu.classList.remove("show");
+            }
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                dropdownMenu.classList.remove("show");
+            }
+        });
+    }
+
+    // Password toggle
+    const toggleButtons = document.querySelectorAll(".toggle-password");
+    toggleButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const input = document.getElementById(this.dataset.target);
+            if (!input) return;
+            if (input.type === "password") {
+                input.type = "text";
+                this.textContent = "Hide";
+            } else {
+                input.type = "password";
+                this.textContent = "Show";
+            }
+        });
+    });
+
+    // Update links with user param
+    updateLinksWithUser();
+    updateAuthUI();
+});
+
 /*  
  * DOCU: Finds the error element associated with a given input field.
  * @param {HTMLElement} input - The input element to find the error message container for.
@@ -221,155 +373,3 @@ function updateLinksWithUser() {
         });
     }
 }
-
-// Run auth UI immediately (header exists in static HTML)
-updateAuthUI();
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Forms are now injected by shared.js, so query them here
-    const signupForm = document.getElementById("signup-form");
-    const loginForm = document.getElementById("login-form");
-
-    // Signup form submission
-    if (signupForm) {
-        signupForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const firstName = document.getElementById("first-name");
-            const lastName = document.getElementById("last-name");
-            const email = document.getElementById("email");
-            const password = document.getElementById("password");
-            const confirmPassword = document.getElementById("confirm-password");
-
-            let isValid = true;
-
-            isValid = validateRequired(firstName, "First name is required") && isValid;
-            isValid = validateRequired(lastName, "Last name is required") && isValid;
-            isValid = validateEmail(email) && isValid;
-            isValid = validatePassword(password) && isValid;
-            isValid = validateRequired(confirmPassword, "Confirm password is required") && isValid;
-
-            if (confirmPassword.value.trim() !== "" && password.value.trim() !== "") {
-                isValid = confirmPassword.value === password.value ? clearError(confirmPassword) && isValid : showError(confirmPassword, "Passwords do not match") && isValid;
-            }
-
-            if (!isValid) return;
-
-            // Save user info to sessionStorage for prefilling profile
-            const userData = {
-                firstName: firstName.value.trim(),
-                lastName: lastName.value.trim(),
-                fullName: `${firstName.value.trim()} ${lastName.value.trim()}`,
-                email: email.value.trim(),
-                password: password.value // Store password for simulation
-            };
-            sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
-
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set("user", userData.firstName);
-            window.location.href = currentUrl.toString();
-        });
-    }
-
-    // Login form submission
-    if (loginForm) {
-        loginForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const email = document.getElementById("login-email");
-            const password = document.getElementById("login-password");
-
-            let isValid = validateEmail(email) && validatePassword(password);
-            if (!isValid) return;
-
-            const firstName = email.value.split("@")[0];
-            
-            // Save mock user info to sessionStorage for prefilling profile
-            const userData = {
-                firstName: firstName,
-                lastName: "",
-                fullName: firstName,
-                email: email.value.trim(),
-                password: password.value // Store password for simulation
-            };
-            sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
-
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set("user", firstName);
-            window.location.href = currentUrl.toString();
-        });
-    }
-
-    // Logout
-    const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            showNotification("Logged Out", "You have been logged out.", "info", function () {
-                sessionStorage.removeItem("organic_shop_user"); // Clear user info on logout
-                const currentUrl = new URL(window.location.href);
-                currentUrl.searchParams.delete("user");
-                window.location.href = currentUrl.toString();
-            });
-        });
-    }
-
-    // Avatar dropdown (works across pages with different wrappers)
-    const avatar = document.getElementById("user-avatar");
-    const dropdownMenu = document.getElementById("user-dropdown-menu");
-    const userDisplayName = document.getElementById("user-display-name");
-
-    if (avatar && dropdownMenu) {
-        const dropdownWrapper = avatar.closest(".user-dropdown") || avatar.closest(".dropdown") || avatar.parentElement;
-
-        function toggleUserDropdown(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            dropdownMenu.classList.toggle("show");
-        }
-
-        avatar.addEventListener("click", toggleUserDropdown);
-
-        if (userDisplayName) {
-            userDisplayName.addEventListener("click", toggleUserDropdown);
-        }
-
-        dropdownMenu.addEventListener("click", function (e) {
-            e.stopPropagation();
-        });
-
-        document.addEventListener("click", function (e) {
-            if (!dropdownWrapper || !dropdownWrapper.contains(e.target)) {
-                dropdownMenu.classList.remove("show");
-            }
-        });
-
-        document.addEventListener("keydown", function (e) {
-            if (e.key === "Escape") {
-                dropdownMenu.classList.remove("show");
-            }
-        });
-    }
-
-    // Password toggle
-    const toggleButtons = document.querySelectorAll(".toggle-password");
-    toggleButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const input = document.getElementById(this.dataset.target);
-            if (!input) return;
-            if (input.type === "password") {
-                input.type = "text";
-                this.textContent = "Hide";
-            } else {
-                input.type = "password";
-                this.textContent = "Show";
-            }
-        });
-    });
-
-    // Update links with user param
-    updateLinksWithUser();
-    updateAuthUI();
-});

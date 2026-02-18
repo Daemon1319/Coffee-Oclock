@@ -1,11 +1,14 @@
-/*
- * DOCU: Shared utilities used across all pages.
- * Contains: loadModals, showNotification, hamburger menu, formatPrice, getCartFromStorage.
- *
- * Last Updated: 2026-02-15
- */
+// Constant
+const CART_URL_PARAM = 'cart';
 
-/* ============= FORMAT PRICE ============= */
+// Event Trigger
+document.addEventListener("DOMContentLoaded", function () {
+    loadModals();
+    initHamburgerMenu();
+    initSideNavActiveState();
+    syncCartParamToLinks();
+    updateCartCountBadge();
+});
 
 /*  
  * DOCU: Formats a number as a Philippine Peso currency string.
@@ -21,45 +24,118 @@ function formatPrice(amount) {
     return `₱${Number(amount).toFixed(2)}`;
 }
 
-/* ============= CART STORAGE ============= */
-
 /*  
- * DOCU: Reads the cart array from sessionStorage.
+ * DOCU: Reads and parses the cart array from the URL query parameter.
  * @param {void} - No parameters.
- * @returns {Array} - Array of cart item objects.
- * @throws {None} - Catches and logs JSON parse errors.
+ * @returns {Array} - Returns cart items if valid; otherwise an empty array.
+ * @throws {None} - No exceptions are explicitly thrown.
  *  
- * Last Updated: 2026-02-15
- * Author: Kerzania
+ * Last Updated: 2026-02-19
+ * Author: 
  * Last Updated by: Kerzania
  */
-const CART_STORAGE_KEY = 'organic_shop_cart';
-
 function getCartFromStorage() {
-    try {
-        return JSON.parse(sessionStorage.getItem(CART_STORAGE_KEY)) || [];
-    } catch (e) {
-        console.error("Failed to read cart from storage:", e);
+    const params = new URLSearchParams(window.location.search);
+    const rawCart = params.get(CART_URL_PARAM);
+
+    if (!rawCart) return [];
+
+    const trimmed = rawCart.trim();
+    const looksLikeArray = trimmed.startsWith('[') && trimmed.endsWith(']');
+    if (!looksLikeArray) {
         return [];
     }
+
+    const parsedCart = JSON.parse(trimmed);
+    return Array.isArray(parsedCart) ? parsedCart : [];
 }
 
+/*  
+ * DOCU: Saves cart items into the URL query parameter and updates internal links.
+ * @param {Array} cart - Cart array to persist in the URL.
+ * @returns {void} - Does not return anything.
+ * @throws {None} - No exceptions are explicitly thrown.
+ *  
+ * Last Updated: 2026-02-19
+ * Author: 
+ * Last Updated by: Kerzania
+ */
 function setCartToStorage(cart) {
-    try {
-        sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart || []));
-    } catch (e) {
-        console.error("Failed to write cart to storage:", e);
+    const safeCart = Array.isArray(cart) ? cart : [];
+    const url = new URL(window.location.href);
+
+    if (safeCart.length > 0) {
+        url.searchParams.set(CART_URL_PARAM, JSON.stringify(safeCart));
+    } else {
+        url.searchParams.delete(CART_URL_PARAM);
     }
+
+    window.history.replaceState({}, '', url.toString());
+    syncCartParamToLinks();
 }
 
+/*  
+ * DOCU: Clears cart data from the URL query parameter and updates internal links.
+ * @param {void} - No parameters.
+ * @returns {void} - Does not return anything.
+ * @throws {None} - No exceptions are explicitly thrown.
+ *  
+ * Last Updated: 2026-02-19
+ * Author: 
+ * Last Updated by: Kerzania
+ */
 function clearCartStorage() {
-    try {
-        sessionStorage.removeItem(CART_STORAGE_KEY);
-    } catch (e) {
-        console.error("Failed to clear cart storage:", e);
-    }
+    const url = new URL(window.location.href);
+    url.searchParams.delete(CART_URL_PARAM);
+    window.history.replaceState({}, '', url.toString());
+    syncCartParamToLinks();
 }
 
+/*  
+ * DOCU: Synchronizes the current cart query parameter value to all internal links.
+ * @param {void} - No parameters.
+ * @returns {void} - Does not return anything.
+ * @throws {None} - No exceptions are explicitly thrown.
+ *  
+ * Last Updated: 2026-02-19
+ * Author: 
+ * Last Updated by: Kerzania
+ */
+function syncCartParamToLinks() {
+    const currentUrl = new URL(window.location.href);
+    const cartValue = currentUrl.searchParams.get(CART_URL_PARAM);
+
+    document.querySelectorAll('a[href]').forEach(function (link) {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+
+        if (typeof URL.canParse === 'function' && !URL.canParse(href, window.location.origin)) return;
+
+        const url = new URL(href, window.location.origin);
+        if (url.protocol !== window.location.protocol || url.host !== window.location.host) {
+            return;
+        }
+
+        if (cartValue) {
+            url.searchParams.set(CART_URL_PARAM, cartValue);
+        } else {
+            url.searchParams.delete(CART_URL_PARAM);
+        }
+
+        link.href = url.toString();
+    });
+}
+
+/*  
+ * DOCU: Computes the total cart item count by summing valid item quantities.
+ * @param {void} - No parameters.
+ * @returns {number} - Total quantity of items currently in cart.
+ * @throws {None} - No exceptions are explicitly thrown.
+ *  
+ * Last Updated: 2026-02-19
+ * Author: 
+ * Last Updated by: Kerzania
+ */
 function getCartItemCount() {
     const cart = getCartFromStorage();
 
@@ -69,6 +145,16 @@ function getCartItemCount() {
     }, 0);
 }
 
+/*  
+ * DOCU: Updates all cart count badges in the UI based on current cart quantity.
+ * @param {void} - No parameters.
+ * @returns {void} - Does not return anything.
+ * @throws {None} - No exceptions are explicitly thrown.
+ *  
+ * Last Updated: 2026-02-19
+ * Author: 
+ * Last Updated by: Kerzania
+ */
 function updateCartCountBadge() {
     const cartCountElements = document.querySelectorAll('.cart-count');
     if (!cartCountElements.length) return;
@@ -111,6 +197,16 @@ function initHamburgerMenu() {
 
 /* ============= SIDENAV ACTIVE STATE ============= */
 
+/*  
+ * DOCU: Applies active state styling to the sidebar nav link of the current page.
+ * @param {void} - No parameters.
+ * @returns {void} - Does not return any value.
+ * @throws {None} - No exceptions are explicitly thrown.
+ *  
+ * Last Updated: 2026-02-19
+ * Author: 
+ * Last Updated by: 
+ */
 function initSideNavActiveState() {
     const navLinks = document.querySelectorAll('aside nav ul li a[href]');
     if (!navLinks.length) return;
@@ -174,6 +270,16 @@ function showNotification(title, message, type, onClose, options) {
     const content = document.createElement("div");
     content.className = "notification-content notification-" + type;
 
+    /*  
+     * DOCU: Closes notification modal and optionally executes callback.
+     * @param {boolean} shouldRunCallback - Whether to run onClose callback.
+     * @returns {void} - Does not return any value.
+     * @throws {None} - No exceptions are explicitly thrown.
+     *  
+     * Last Updated: 2026-02-19
+     * Author: Kerzania
+     * Last Updated by: Kerzania
+     */
     function closeNotification(shouldRunCallback) {
         overlay.remove();
         if (shouldRunCallback && typeof onClose === "function") {
@@ -346,17 +452,4 @@ function loadModals() {
     document.body.insertAdjacentHTML("beforeend", modalsHTML);
 }
 
-/* ============= INITIALIZATION ============= */
 
-document.addEventListener("DOMContentLoaded", function () {
-    loadModals();
-    initHamburgerMenu();
-    initSideNavActiveState();
-    updateCartCountBadge();
-
-    window.addEventListener('storage', function (event) {
-        if (event.key === CART_STORAGE_KEY) {
-            updateCartCountBadge();
-        }
-    });
-});

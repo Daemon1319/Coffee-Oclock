@@ -8,6 +8,12 @@ const searchBar = document.querySelector(".search-bar");
 
 const PAGE_SIZE = 8;
 
+// Event triggers / initializers
+searchBar.addEventListener("input", searchFilter);
+renderCategories();
+goToPage(1);
+updateCartCountBadge();
+
 /*  
  * DOCU: Renders category buttons into the categories list container.
  * It counts products per category and dynamically creates each category item in the sidebar.
@@ -80,8 +86,6 @@ function renderCategories() {
     });
 }
 
-renderCategories();
-
 /*  
  * DOCU: Filters products by the selected category and re-renders the product grid.
  * It loops through all products, keeps only those matching the given category,
@@ -147,13 +151,14 @@ function searchFilter() {
     goToPage(1, filtered);
 }
 
-// Listen for input on the search bar
-searchBar.addEventListener("input", searchFilter);
-
 /*
  * DOCU: Shows an empty-state message when no products match the search term.
  * @param {string} searchValue - The raw value from the search input.
  * @returns {void}
+ * 
+ * Last Updated: 2026-02-17  
+ * Author: Kerzania  
+ * Last Updated By: Kerzania  
  */
 function renderNoSearchResults(searchValue) {
     if (!productContainer) return;
@@ -202,12 +207,12 @@ function renderProducts(products) {
         const image = document.createElement("img");
         thumbDiv.appendChild(image);
         const infoDiv = document.createElement("div");
-        const infoLeft = document.createElement("div");
+        const infoDetails = document.createElement("div");
         const name = document.createElement("h3");
         const meta = document.createElement("p");
-        infoLeft.append(name, meta);
+        infoDetails.append(name, meta);
         const price = document.createElement("p");
-        infoDiv.append(infoLeft, price);
+        infoDiv.append(infoDetails, price);
         const addToCartBtn = document.createElement("button");
         card.append(thumbDiv, infoDiv, addToCartBtn);
 
@@ -215,7 +220,7 @@ function renderProducts(products) {
         thumbDiv.classList.add("product-thumb");
         image.classList.add("product-image");
         infoDiv.classList.add("product-info");
-        infoLeft.classList.add("info-details");
+        infoDetails.classList.add("info-details");
         name.classList.add("product-name");
         meta.classList.add("product-meta");
         price.classList.add("product-price");
@@ -423,6 +428,3 @@ function renderPagination(totalPages, activePage, productList) {
 
     paginationContainer.appendChild(nextBtn);
 }
-
-goToPage(1);
-updateCartCountBadge();
