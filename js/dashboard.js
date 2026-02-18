@@ -266,6 +266,7 @@ function getProducts() {
 *
 * Last Updated: 2026-02-15  
 * Author: Errol
+* Last Updated By: Allan Banzuela
 */
 function addToCart(productId) {
     const urlParams = new URLSearchParams(window.location.search);
