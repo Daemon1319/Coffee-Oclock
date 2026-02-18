@@ -96,7 +96,7 @@ function updateCartCountBadge() {
  */
 function initHamburgerMenu() {
     const menuBtn = document.getElementById("menuBtn");
-    const overlay = document.getElementById("overlay");
+    const overlay = document.getElementById("sidebar-overlay");
 
     if (menuBtn && overlay) {
         menuBtn.addEventListener("click", function () {
@@ -247,7 +247,7 @@ function loadModals() {
                 </div>
 
                 <form id="signup-form">
-                    <div class="row">
+                    <div class="signup-form-row">
                         <div class="input-group">
                             <input id="first-name" name="first-name" type="text">
                             <label for="first-name">First Name</label>
@@ -260,7 +260,7 @@ function loadModals() {
                         </div>
                     </div>
 
-                    <div class="column">
+                    <div class="signup-form-column">
                         <div class="input-group">
                             <input id="email" name="email" type="email" >
                             <label for="email">Email</label>

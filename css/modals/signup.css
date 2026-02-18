@@ -63,16 +63,16 @@
     flex-direction: column;
 }
 
-#signup-container>div form .row {
+#signup-container>div form .signup-form-row {
     display: flex;
     gap: 20px;
 }
 
-#signup-container>div form .row div {
+#signup-container>div form .signup-form-row div {
     flex: 1;
 }
 
-#signup-container>div form .column {
+#signup-container>div form .signup-form-column {
     display: flex;
     flex-direction: column;
 }
@@ -240,7 +240,7 @@ input#first-name {
         width: 100%;
     }
 
-    #signup-container>div form .row {
+    #signup-container>div form .signup-form-row {
         flex-direction: column;
         gap: 0px;
     }
@@ -261,10 +261,6 @@ input#first-name {
     .signup-text button {
         font-size: 12px;
         margin: 10px 0 2em;
-    }
-
-    .brand-logo {
-        width: 60px;
     }
 
     .close-btn {

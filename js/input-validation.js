@@ -257,8 +257,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Avatar dropdown
-    const avatar = document.getElementById("avatar");
-    const dropdownMenu = document.getElementById("dropdownMenu");
+    const avatar = document.getElementById("user-avatar");
+    const dropdownMenu = document.getElementById("user-dropdown-menu");
     if (avatar && dropdownMenu) {
         avatar.addEventListener("click", function (e) {
             e.stopPropagation();

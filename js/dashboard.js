@@ -1,6 +1,6 @@
 // Constants
 const productContainer = document.querySelector(".product-grid");
-const productLength = document.querySelector(".count");
+const productLength = document.querySelector(".product-count");
 const paginationContainer = document.querySelector(".pagination");
 
 const categoryList = document.getElementById("categories-list");

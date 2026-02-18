@@ -261,7 +261,7 @@ function addToCart() {
  */
 
 function getQty() {
-    return Math.max(1, parseInt(document.getElementById("qty").value, 10) || 1);
+    return Math.max(1, parseInt(document.getElementById("product-qty").value, 10) || 1);
 }
 
 /*
@@ -275,7 +275,7 @@ function getQty() {
  * Last Updated By: Kerzania
  */
 function changeQty(step) {
-    document.getElementById("qty").value = Math.max(1, getQty() + step);
+    document.getElementById("product-qty").value = Math.max(1, getQty() + step);
     updateTotalPrice();
 }
 

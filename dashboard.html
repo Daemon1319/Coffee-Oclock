@@ -32,7 +32,7 @@
         </nav>
     </aside>
 
-    <div class="overlay" id="overlay"></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <div class="page-content">
         <header>
@@ -43,22 +43,22 @@
                         <i class="bi bi-list"></i>
                     </button>
 
-                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="dashboard-logo">
+                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="brand-icon">
                     <p>It's always <strong>Coffee O'clock</strong></p>
                 </div>
 
                 <!-- RIGHT: auth OR user -->
                 <div class="header-actions">
-                    <div class="link-container" id="auth-links">
+                    <div class="auth-link-container" id="auth-links">
                         <button type="button" class="signup-link">SIGN UP</button>
                         <button type="button" class="login-link">LOGIN</button>
                     </div>
 
                     <div class="user-container hidden" id="user-profile">
                         <span id="user-display-name"></span>
-                        <div class="dropdown">
-                            <a href="profile.html"><img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="avatar"></a>
-                            <div class="dropdown-content" id="dropdownMenu">
+                        <div class="user-dropdown">
+                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="user-avatar">
+                            <div class="user-dropdown-menu" id="user-dropdown-menu">
                                 <button type="button" id="logout-btn">Logout</button>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                 </div>
             </div>
         </header>
-        
+
         <section class="search-container">
             <form action="">
                 <input type="text" placeholder="Search for products..." class="search-bar">
@@ -94,7 +94,7 @@
 
             <section class="product-container">
                 <div class="product-header">
-                    <h4>Anytime Drinks <span class="count">(36)</span></h4>
+                    <h4>Anytime Drinks <span class="product-count">(36)</span></h4>
                 </div>
 
                 <div class="product-grid">
@@ -114,7 +114,7 @@
                     </a> -->
                 </div>
 
-                <div class="pagination" id="pagination">
+                <div class="pagination">
                     <!-- TEMPLATE TO USE IN JS -->
                     <!-- 
                     <button>left arrow</button>

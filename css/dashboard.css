@@ -118,7 +118,7 @@ aside nav ul li a[href="cart.html"] {
     gap: 8px;
 }
 
-.product-header .count {
+.product-header .product-count {
     font-size: 14px;
     opacity: 0.7;
 }
@@ -147,7 +147,8 @@ aside nav ul li a[href="cart.html"] {
     overflow: hidden;
     text-decoration: none;
     box-shadow: 0 10px 24px rgba(90, 61, 43, 0.06);
-
+    display: flex;
+    flex-direction: column;
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
@@ -184,6 +185,7 @@ aside nav ul li a[href="cart.html"] {
     padding: 16px 14px 14px;
     gap: 10px;
     color: #3e2723;
+    flex: 1;
 }
 
 .product-name {
