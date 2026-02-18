@@ -273,7 +273,21 @@ function addToCart(productId) {
     const userName = urlParams.get("user");
 
     if (!userName) {
-        showNotification("Login Required", "Please log in or sign up to add items to your cart.", "warning");
+        showNotification(
+            "Login Required",
+            "Please log in or sign up to add items to your cart.",
+            "info",
+            function () {
+                if (typeof window.showLoginModal === "function") {
+                    window.showLoginModal(new Event('click'));
+                }
+            },
+            {
+                confirmText: "OK",
+                showCancel: true,
+                cancelText: "Not now"
+            }
+        );
         return;
     }
 
