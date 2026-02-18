@@ -6,6 +6,15 @@ main {
     width: 100%;
 }
 
+aside nav ul li a[href="cart.html"],
+aside nav ul li a[href="dashboard.html"] {
+    background-color: transparent; 
+}
+
+aside nav ul li a[href="cart.html"].active,
+aside nav ul li a[href="dashboard.html"].active {
+    background-color: transparent;
+}
 
 .product-container {
     flex: 1;

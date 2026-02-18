@@ -309,6 +309,25 @@ displaySimilarItems();
             return product.name.toLowerCase().includes(lowerQuery);
         });
     }
+// Function to set transparent background for Cart & Dashboard links
+    function forceNavLinksTransparent() {
+        const links = document.querySelectorAll('aside nav ul li a[href="cart.html"], aside nav ul li a[href="dashboard.html"]');
+        links.forEach(link => {
+            link.style.backgroundColor = "transparent"; // inline style
+        });
+    }
+
+    // Run on initial load
+    forceNavLinksTransparent();
+
+    // Observe the aside element for any changes (like login re-rendering links)
+    const aside = document.querySelector("aside nav ul");
+    if (aside) {
+        const observer = new MutationObserver(() => {
+            forceNavLinksTransparent();
+        });
+        observer.observe(aside, { childList: true, subtree: true });
+    }
 
     /*  
      * DOCU: Displays search results in the dropdown.
@@ -384,3 +403,5 @@ displaySimilarItems();
         }
     });
 })();
+
+
