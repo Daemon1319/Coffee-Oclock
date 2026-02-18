@@ -89,21 +89,7 @@ if (cartBtn) {
         const userName = urlParams.get("user");
 
         if (!userName) {
-            showNotification(
-                "Login Required",
-                "Please log in or sign up to proceed to checkout.",
-                "info",
-                function () {
-                    if (typeof window.showLoginModal === "function") {
-                        window.showLoginModal(new Event('click'));
-                    }
-                },
-                {
-                    confirmText: "OK",
-                    showCancel: true,
-                    cancelText: "Not now"
-                }
-            );
+            showNotification("Login Required", "Please log in or sign up to proceed to checkout.", "warning");
             return;
         }
 

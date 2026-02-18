@@ -91,8 +91,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    window.showLoginModal = showLoginModal;
-    window.showSignupModal = showSignupModal;
-
     initializeModalEvents();
 });

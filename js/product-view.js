@@ -208,21 +208,7 @@ function addToCart() {
     const userName = urlParams.get("user");
 
     if (!userName) {
-        showNotification(
-            "Login Required",
-            "Please log in or sign up to add items to your cart.",
-            "info",
-            function () {
-                if (typeof window.showLoginModal === "function") {
-                    window.showLoginModal(new Event('click'));
-                }
-            },
-            {
-                confirmText: "OK",
-                showCancel: true,
-                cancelText: "Not now"
-            }
-        );
+        showNotification("Login Required", "Please log in or sign up to add items to your cart.", "warning");
         return;
     }
 
@@ -275,7 +261,7 @@ function addToCart() {
  */
 
 function getQty() {
-    return Math.max(1, parseInt(document.getElementById("qty").value, 10) || 1);
+    return Math.max(1, parseInt(document.getElementById("product-qty").value, 10) || 1);
 }
 
 /*
@@ -289,7 +275,7 @@ function getQty() {
  * Last Updated By: Kerzania
  */
 function changeQty(step) {
-    document.getElementById("qty").value = Math.max(1, getQty() + step);
+    document.getElementById("product-qty").value = Math.max(1, getQty() + step);
     updateTotalPrice();
 }
 
@@ -322,6 +308,25 @@ displaySimilarItems();
         return PRODUCTS.filter(function (product) {
             return product.name.toLowerCase().includes(lowerQuery);
         });
+    }
+// Function to set transparent background for Cart & Dashboard links
+    function forceNavLinksTransparent() {
+        const links = document.querySelectorAll('aside nav ul li a[href="cart.html"], aside nav ul li a[href="dashboard.html"]');
+        links.forEach(link => {
+            link.style.backgroundColor = "transparent"; // inline style
+        });
+    }
+
+    // Run on initial load
+    forceNavLinksTransparent();
+
+    // Observe the aside element for any changes (like login re-rendering links)
+    const aside = document.querySelector("aside nav ul");
+    if (aside) {
+        const observer = new MutationObserver(() => {
+            forceNavLinksTransparent();
+        });
+        observer.observe(aside, { childList: true, subtree: true });
     }
 
     /*  
@@ -398,3 +403,5 @@ displaySimilarItems();
         }
     });
 })();
+
+
