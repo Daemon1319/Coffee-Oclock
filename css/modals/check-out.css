@@ -1,3 +1,4 @@
+
 #check-out-modal-container {
     display: none;
     position: fixed;
@@ -30,15 +31,8 @@
 }
 
 @keyframes checkoutSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Close button */
@@ -58,29 +52,34 @@
     color: #6f4e37;
 }
 
-#check-out-container>div {
+/* Logos */
+.brand-logos {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 12px;
 }
 
-#check-out-container>div img {
-    height: 50px;
+.brand-logos img {
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
 }
 
 /* Form */
-#check-out-container form {
+form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-#check-out-container .column {
+.column {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-#check-out-container input {
+input {
     width: 100%;
     padding: 12px 14px;
     border: 1.5px solid #ddd;
@@ -93,19 +92,15 @@
     transition: border-color 0.2s ease;
 }
 
-#check-out-container input::placeholder {
+input::placeholder {
     color: #cbb7a6;
 }
 
-#check-out-container input:focus {
+input:focus {
     border-color: #6c63ff;
 }
 
-#check-out-container input:invalid:not(:placeholder-shown) {
-    border-color: #d9534f;
-    background-color: #fff5f5;
-}
-
+/* Expiration & CVC side by side */
 .row {
     display: flex;
     gap: 10px;
@@ -117,8 +112,8 @@
 
 .total {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: column; /* stack label and number */
+    align-items: flex-end;  /* push number to the right */
     padding: 12px 0;
     font-size: 0.95rem;
     font-weight: 700;
@@ -126,7 +121,7 @@
 }
 
 .total span:last-child {
-    color: #6c63ff;
+    color: #6c63ff; /* amount color */
     font-weight: 700;
 }
 
@@ -150,21 +145,8 @@ button[type="submit"]:hover {
 
 /* Mobile */
 @media (max-width: 500px) {
-    #check-out-container {
-        width: 95%;
-        padding: 20px;
-    }
-
-    .brand-logos img {
-        max-height: 40px;
-    }
-
-    input {
-        padding: 10px;
-        font-size: 0.85rem;
-    }
-
-    .total {
-        font-size: 0.9rem;
-    }
+    #check-out-container { width: 95%; padding: 20px; }
+    .brand-logos img { max-height: 40px; }
+    input { padding: 10px; font-size: 0.85rem; }
+    .total { font-size: 0.9rem; }
 }
