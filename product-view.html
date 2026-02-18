@@ -31,7 +31,7 @@
         </nav>
     </aside>
 
-    <div class="overlay" id="overlay"></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <div class="page-content">
         <header>
@@ -42,22 +42,22 @@
                         <i class="bi bi-list"></i>
                     </button>
 
-                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="dashboard-logo">
+                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="brand-icon">
                     <p>It's always <strong>Coffee O'clock</strong></p>
                 </div>
 
                 <!-- RIGHT: auth OR user -->
                 <div class="header-actions">
-                    <div class="link-container" id="auth-links">
+                    <div class="auth-link-container" id="auth-links">
                         <button type="button" class="signup-link">SIGN UP</button>
                         <button type="button" class="login-link">LOGIN</button>
                     </div>
 
                     <div class="user-container hidden" id="user-profile">
                         <span id="user-display-name"></span>
-                        <div class="dropdown">
-                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="avatar">
-                            <div class="dropdown-content" id="dropdownMenu">
+                        <div class="user-dropdown">
+                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="user-avatar">
+                            <div class="user-dropdown-menu" id="user-dropdown-menu">
                                 <button type="button" id="logout-btn">Logout</button>
                             </div>
                         </div>
@@ -88,16 +88,16 @@
                     <i class="bi bi-box-arrow-left"></i>
                 </a>
 
-                <div class="product-left">
-                    <div class="image-card">
+                <div class="product-view-image">
+                    <div class="product-image-card">
                         <img src="assets/img/beta_logo.jpg" alt="Main Image" class="main-image" id="mainImage">
                     </div>
                 </div>
 
-                <div class="product-right">
+                <div class="product-view-details">
                     <div class="product-description">
                         <div class="product-content">
-                            <div class="title-row">
+                            <div class="product-title-row">
                                 <h3 id="productName">Product Name</h3>
                                 <span class="price-pill">₱<span id="productPrice">9999</span></span>
                             </div>
@@ -115,14 +115,14 @@
                             </p>
                         </div>
 
-                        <div class="purchase-function">
+                        <div class="product-purchase-section">
                             <div class="purchase-card">
                                 <div class="purchase-group">
                                     <p class="purchase-label">Quantity</p>
                                     <div class="quantity-container">
                                         <button type="button" onclick="changeQty(-1)"
                                             aria-label="Decrease quantity">−</button>
-                                        <input type="text" id="qty" value="1" min="1" disabled>
+                                        <input type="text" id="product-qty" value="1" min="1" disabled>
                                         <button type="button" onclick="changeQty(1)"
                                             aria-label="Increase quantity">+</button>
                                     </div>

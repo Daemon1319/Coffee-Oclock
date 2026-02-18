@@ -100,10 +100,6 @@
     color: #d9ccbf;
 }
 
-.login-btn {
-    width: 100%;
-}
-
 .side-image {
     width: 30%;
     height: 70vh;
@@ -200,12 +196,6 @@
     cursor: pointer;
 }
 
-.password-input {
-    position: relative;
-}
-
-
-
 /* Responsive Design */
 
 /* Mobile devices (up to 768px) */
@@ -270,10 +260,6 @@
     .login-text button {
         font-size: 12px;
         margin: 10px 0 3em;
-    }
-
-    .brand-logo {
-        width: 60px;
     }
 
     .close-btn {

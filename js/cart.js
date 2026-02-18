@@ -9,7 +9,6 @@
 const cartContainer = document.getElementById('cartContainer');
 const itemCountEl = document.getElementById('itemCount');
 const shippingFeeEl = document.getElementById('shippingFee');
-const totalAmountCart = document.getElementById('total-amount');
 const totalAmountModal = document.getElementById('total-amount-modal');
 const totalAmountEl = document.getElementById('totalAmount');
 const checkoutBtn = document.getElementById('checkoutBtn');
@@ -19,8 +18,6 @@ const modalCloseBtn = modalContainer.querySelector('.close-btn');
 
 const paymentForm = document.getElementById('paymentForm');
 const shippingInfoForm = document.getElementById('shippingForm');
-const payBtn = document.getElementById('pay-button');
-const notification = document.getElementById('notification');
 const cardNameInput = document.getElementById('card-name');
 const cardNumberInput = document.getElementById('card-number');
 const expirationInput = document.getElementById('expiration');
@@ -355,7 +352,6 @@ function updateOrderSummary() {
 
     if (itemCountEl) itemCountEl.textContent = itemCount;
     if (shippingFeeEl) shippingFeeEl.textContent = numberToCurrency(appliedShippingFee);
-    if (totalAmountCart) totalAmountCart.textContent = numberToCurrency(subtotal);
     if (totalAmountModal) totalAmountModal.textContent = numberToCurrency(total);
     if (totalAmountEl) totalAmountEl.textContent = numberToCurrency(total);
 }
