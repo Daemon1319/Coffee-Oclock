@@ -208,7 +208,8 @@ function renderProducts(products) {
         infoLeft.append(name, meta);
         const price = document.createElement("p");
         infoDiv.append(infoLeft, price);
-        card.append(thumbDiv, infoDiv);
+        const addToCartBtn = document.createElement("button");
+        card.append(thumbDiv, infoDiv, addToCartBtn);
 
         card.classList.add("product-card");
         thumbDiv.classList.add("product-thumb");
@@ -218,13 +219,21 @@ function renderProducts(products) {
         name.classList.add("product-name");
         meta.classList.add("product-meta");
         price.classList.add("product-price");
+        addToCartBtn.classList.add("add-to-cart-btn");
+        addToCartBtn.type = "button";
 
         // Set the content of each element
         image.src = product.image || DEFAULT_PRODUCT_IMAGE_SRC;
         image.alt = product.name;
         name.innerText = product.name;
-        meta.innerText = `${product.stars} stars • ${product.ratings} Ratings`;
+        meta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
         price.innerText = `₱${Number(product.price).toFixed(2)}`;
+        addToCartBtn.innerText = "Add to Cart";
+        addToCartBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            addToCart(product.id);
+        });
 
         // Append to container
         productContainer.appendChild(card);
@@ -245,6 +254,60 @@ function renderProducts(products) {
 */
 function getProducts() {
     return PRODUCTS;
+}
+
+/*  
+* DOCU: Adds a product to the shopping cart. Requires user authentication.
+* If user is not logged in, prompts them to log in or sign up first.
+*  
+* @param {none} - This function does not accept any parameter.
+* @returns {void} - This function does not return a value.
+* @throws {none} - This function does not explicitly throw errors.
+*
+* Last Updated: 2026-02-15  
+* Author: Errol
+*/
+function addToCart(productId) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userName = urlParams.get("user");
+
+    if (!userName) {
+        showNotification("Login Required", "Please log in or sign up to add items to your cart.", "warning");
+        return;
+    }
+
+    const product = findProductById(productId);
+
+    if (!product) {
+        showNotification("Error", "Product not found!", "error");
+        return;
+    }
+
+    const quantity = 1;
+
+    let cart = getCartFromStorage();
+
+    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+
+    if (existingProductIndex > -1) {
+        cart[existingProductIndex].quantity += quantity;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: quantity
+        });
+    }
+
+    setCartToStorage(cart);
+
+    if (typeof updateCartCountBadge === "function") {
+        updateCartCountBadge();
+    }
+
+    showNotification("Drink Added!", `${product.name} (x${quantity}) has been added to cart.`);
 }
 
 /*  

@@ -79,7 +79,7 @@ function displaySelectedProduct() {
     mainImage.classList.add("main-image")
 
     productName.innerText = product.name;
-    productMeta.innerText = `${product.stars} stars • ${product.ratings} Ratings`;
+    productMeta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
     productPrice.innerText = Number(product.price).toFixed(2);
     updateTotalPrice();
 
@@ -174,7 +174,7 @@ function createProductCard(product) {
 
     const meta = document.createElement("p");
     meta.classList.add("product-meta");
-    meta.innerText = `${product.stars ?? 0} stars • ${product.ratings ?? 0} Ratings`;
+    meta.innerHTML = `${renderStarsHTML(product.stars ?? 0)} • ${product.ratings ?? 0} Ratings`;
 
     infoDetails.appendChild(name);
     infoDetails.appendChild(meta);
@@ -244,7 +244,7 @@ function addToCart() {
         updateCartCountBadge();
     }
 
-    showNotification("Item Added!", `${product.name} (x${quantity}) has been added to cart.`);
+    showNotification("Drink Added!", `${product.name} (x${quantity}) has been added to cart.`);
 }
 
 
