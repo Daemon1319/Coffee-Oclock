@@ -1,4 +1,3 @@
-
 #check-out-modal-container {
     display: none;
     position: fixed;
@@ -31,8 +30,15 @@
 }
 
 @keyframes checkoutSlideIn {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Close button */
@@ -52,34 +58,29 @@
     color: #6f4e37;
 }
 
-/* Logos */
-.brand-logos {
+#check-out-container>div {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 12px;
 }
 
-.brand-logos img {
-    max-height: 50px;
-    width: auto;
-    object-fit: contain;
+#check-out-container>div img {
+    height: 50px;
 }
 
 /* Form */
-form {
+#check-out-container form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.column {
+#check-out-container .column {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-input {
+#check-out-container input {
     width: 100%;
     padding: 12px 14px;
     border: 1.5px solid #ddd;
@@ -92,15 +93,19 @@ input {
     transition: border-color 0.2s ease;
 }
 
-input::placeholder {
+#check-out-container input::placeholder {
     color: #cbb7a6;
 }
 
-input:focus {
+#check-out-container input:focus {
     border-color: #6c63ff;
 }
 
-/* Expiration & CVC side by side */
+#check-out-container input:invalid:not(:placeholder-shown) {
+    border-color: #d9534f;
+    background-color: #fff5f5;
+}
+
 .row {
     display: flex;
     gap: 10px;
@@ -112,8 +117,8 @@ input:focus {
 
 .total {
     display: flex;
-    flex-direction: column; /* stack label and number */
-    align-items: flex-end;  /* push number to the right */
+    flex-direction: column;
+    align-items: flex-end;
     padding: 12px 0;
     font-size: 0.95rem;
     font-weight: 700;
@@ -121,7 +126,7 @@ input:focus {
 }
 
 .total span:last-child {
-    color: #6c63ff; /* amount color */
+    color: #6c63ff;
     font-weight: 700;
 }
 
@@ -145,8 +150,21 @@ button[type="submit"]:hover {
 
 /* Mobile */
 @media (max-width: 500px) {
-    #check-out-container { width: 95%; padding: 20px; }
-    .brand-logos img { max-height: 40px; }
-    input { padding: 10px; font-size: 0.85rem; }
-    .total { font-size: 0.9rem; }
+    #check-out-container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .brand-logos img {
+        max-height: 40px;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .total {
+        font-size: 0.9rem;
+    }
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Constants
 const productContainer = document.querySelector(".product-grid");
 const productLength = document.querySelector(".count");
@@ -7,19 +6,20 @@ const paginationContainer = document.querySelector(".pagination");
 const categoryList = document.getElementById("categories-list");
 const searchBar = document.querySelector(".search-bar");
 
-const PAGE_SIZE = 14;
+const PAGE_SIZE = 8;
 
 /*  
  * DOCU: Renders category buttons into the categories list container.
- * It counts products per category, uses the first product's image as the icon,
- * and dynamically creates each category item in the sidebar.
+ * It counts products per category and dynamically creates each category item in the sidebar.
+ * Also applies an "active" state to the clicked category button for UI feedback.
+ *  
  * @param {none} - This function does not accept any parameter.
  * @returns {void} - Does not return a value.
  * @throws {None} - No exceptions are thrown.
  *  
- * Last Updated: 2026-02-14  
+ * Last Updated: 2026-02-15  
  * Author: Allan Banzuela  
- * Last Updated By: Allan Banzuela  
+ * Last Updated By: Jheanne Salan  
  */
 function renderCategories() {
     if (!categoryList) return;
@@ -27,10 +27,10 @@ function renderCategories() {
     const categories = { all: { count: 0 } }; // Added ALL as a category
 
     getProducts().forEach(product => {
-        categories.all.count++; // Count all products for the "all" category
+        categories.all.count++;
 
         if (!categories[product.category]) {
-            categories[product.category] = { count: 1 }; // This is just to store the image of the first product in that category
+            categories[product.category] = { count: 1 };
         } else {
             categories[product.category].count++;
         }
@@ -39,23 +39,36 @@ function renderCategories() {
     categoryList.innerHTML = "";
 
     Object.keys(categories).forEach(category => {
-        // Creating the html elements for each category item
         const categoryItem = document.createElement("li");
         const categoryButton = document.createElement("button");
-        categoryItem.appendChild(categoryButton); // Put inside the list
+        categoryItem.appendChild(categoryButton);
+
         const categoryName = document.createElement("span");
         const categoryCount = document.createElement("span");
-        categoryButton.append(categoryName, categoryCount); // Put inside the button
+        categoryButton.append(categoryName, categoryCount);
 
-        // Here you can put classes to each element if you want, for styling purposes
+        categoryName.innerText = category
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
 
-        // categoryName.classList.add("category-name"); this is just an example revomed when you are done with styling
-
-        // Set the content of each element
-        categoryName.innerText = category.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "); // Format category name for example is "espresso-shakers" to "Espresso Shakers"
         categoryCount.innerText = categories[category].count;
 
+        // Set default active button to "all"
+        if (category === "all") {
+            categoryButton.classList.add("active");
+        }
+
         categoryButton.addEventListener("click", function () {
+            // remove active from all category buttons
+            document.querySelectorAll("#categories-list button").forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            // add active to the clicked one
+            categoryButton.classList.add("active");
+
+            // filter products
             if (category === "all") {
                 goToPage(1);
             } else {
@@ -108,7 +121,8 @@ function categoryFilter(category) {
  * Last Updated By: Allan Banzuela  
  */
 function searchFilter() {
-    const searchTerm = searchBar.value.toLowerCase();
+    const rawSearchValue = searchBar.value.trim();
+    const searchTerm = rawSearchValue.toLowerCase();
 
     // If search bar is empty, go back to paginated view
     if (searchTerm === "") {
@@ -125,11 +139,41 @@ function searchFilter() {
         }
     });
 
+    if (filtered.length === 0) {
+        renderNoSearchResults(rawSearchValue);
+        return;
+    }
+
     goToPage(1, filtered);
 }
 
 // Listen for input on the search bar
 searchBar.addEventListener("input", searchFilter);
+
+/*
+ * DOCU: Shows an empty-state message when no products match the search term.
+ * @param {string} searchValue - The raw value from the search input.
+ * @returns {void}
+ */
+function renderNoSearchResults(searchValue) {
+    if (!productContainer) return;
+
+    productContainer.innerHTML = "";
+
+    const message = document.createElement("p");
+    message.className = "search-empty-state";
+    message.textContent = '"' + searchValue + '" is not a product in the store';
+
+    productContainer.appendChild(message);
+
+    if (productLength) {
+        productLength.innerText = "(0)";
+    }
+
+    if (paginationContainer) {
+        paginationContainer.innerHTML = "";
+    }
+}
 
 
 
@@ -152,22 +196,21 @@ function renderProducts(products) {
 
     products.forEach(function (product) {
 
-        // Creating the html elements for each product card
         const card = document.createElement("a");
         card.href = `product-view.html?id=${product.id}`;
         const thumbDiv = document.createElement("div");
         const image = document.createElement("img");
-        thumbDiv.appendChild(image); // Put inside the thumbnail
+        thumbDiv.appendChild(image);
         const infoDiv = document.createElement("div");
         const infoLeft = document.createElement("div");
         const name = document.createElement("h3");
         const meta = document.createElement("p");
-        infoLeft.append(name, meta); // Put inside the info left
+        infoLeft.append(name, meta);
         const price = document.createElement("p");
-        infoDiv.append(infoLeft, price); // Put inside the info container
-        card.append(thumbDiv, infoDiv); // Put inside the card
+        infoDiv.append(infoLeft, price);
+        const addToCartBtn = document.createElement("button");
+        card.append(thumbDiv, infoDiv, addToCartBtn);
 
-        // Here you can put classes to each element if you want, for styling purposes
         card.classList.add("product-card");
         thumbDiv.classList.add("product-thumb");
         image.classList.add("product-image");
@@ -176,13 +219,21 @@ function renderProducts(products) {
         name.classList.add("product-name");
         meta.classList.add("product-meta");
         price.classList.add("product-price");
+        addToCartBtn.classList.add("add-to-cart-btn");
+        addToCartBtn.type = "button";
 
         // Set the content of each element
         image.src = product.image || DEFAULT_PRODUCT_IMAGE_SRC;
         image.alt = product.name;
         name.innerText = product.name;
-        meta.innerText = `${product.stars} stars • ${product.ratings} Ratings`;
-        price.innerText = `$${Number(product.price).toFixed(2)}`;
+        meta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
+        price.innerText = `₱${Number(product.price).toFixed(2)}`;
+        addToCartBtn.innerText = "Add to Cart";
+        addToCartBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            addToCart(product.id);
+        });
 
         // Append to container
         productContainer.appendChild(card);
@@ -203,6 +254,61 @@ function renderProducts(products) {
 */
 function getProducts() {
     return PRODUCTS;
+}
+
+/*  
+* DOCU: Adds a product to the shopping cart. Requires user authentication.
+* If user is not logged in, prompts them to log in or sign up first.
+*  
+* @param {none} - This function does not accept any parameter.
+* @returns {void} - This function does not return a value.
+* @throws {none} - This function does not explicitly throw errors.
+*
+* Last Updated: 2026-02-15  
+* Author: Errol
+* Last Updated By: Allan Banzuela
+*/
+function addToCart(productId) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userName = urlParams.get("user");
+
+    if (!userName) {
+        showNotification("Login Required", "Please log in or sign up to add items to your cart.", "warning");
+        return;
+    }
+
+    const product = findProductById(productId);
+
+    if (!product) {
+        showNotification("Error", "Product not found!", "error");
+        return;
+    }
+
+    const quantity = 1;
+
+    let cart = getCartFromStorage();
+
+    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+
+    if (existingProductIndex > -1) {
+        cart[existingProductIndex].quantity += quantity;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: quantity
+        });
+    }
+
+    setCartToStorage(cart);
+
+    if (typeof updateCartCountBadge === "function") {
+        updateCartCountBadge();
+    }
+
+    showNotification("Drink Added!", `${product.name} (x${quantity}) has been added to cart.`);
 }
 
 /*  
@@ -261,10 +367,7 @@ function renderPagination(totalPages, activePage, productList) {
     const prevBtn = document.createElement("button");
     prevBtn.type = "button";
 
-    // Here you can put classes to the element if you want, for styling purposes
     prevBtn.classList.add("page-btn");
-
-    // Set the content of the element
     prevBtn.innerText = "<";
     prevBtn.disabled = activePage === 1;
 
@@ -279,11 +382,7 @@ function renderPagination(totalPages, activePage, productList) {
 
         const btn = document.createElement("button");
         btn.type = "button";
-
-        // Here you can put classes to the element if you want, for styling purposes
         btn.classList.add("page-btn");
-
-        // Set the content of the element
         btn.innerText = page;
 
         if (page === activePage) {
@@ -297,14 +396,9 @@ function renderPagination(totalPages, activePage, productList) {
         paginationContainer.appendChild(btn);
     }
 
-    // Creating the html element for the next button
     const nextBtn = document.createElement("button");
     nextBtn.type = "button";
-
-    // Here you can put classes to the element if you want, for styling purposes
     nextBtn.classList.add("page-btn");
-
-    // Set the content of the element
     nextBtn.innerText = ">";
     nextBtn.disabled = activePage === totalPages;
 
@@ -316,149 +410,4 @@ function renderPagination(totalPages, activePage, productList) {
 }
 
 goToPage(1);
-=======
-//Constants
-const productCards = document.querySelectorAll(".product-card");
-const paginationContainer = document.querySelector(".pagination");
-const pageButtons = paginationContainer ? paginationContainer.querySelectorAll(".page-btn") : [];
-
-const prevButton = pageButtons.length > 0 ? pageButtons[0] : null;
-const nextButton = pageButtons.length > 0 ? pageButtons[pageButtons.length - 1] : null;
-
-const numberButtons = [];
-
-const ITEMS_PER_PAGE = 4;
-const TOTAL_PAGES = Math.ceil(productCards.length / ITEMS_PER_PAGE);
-
-let currentPage = 1;
-
-//Event Trigger
-if (paginationContainer && productCards.length > 0 && pageButtons.length >= 3) {
-
-    buildNumberButtons();
-    attachNumberButtonEvents();
-    attachPrevNextEvents();
-    renderPage(1);
-}
-
-//Funtions
-/*  
- * DOCU: Collects only the number buttons from pagination.
- * Excludes the first "<" and last ">" buttons.
- * @returns {void}
- */
-function buildNumberButtons() {
-
-    // Loop through pagination buttons except first and last
-    for (let i = 1; i < pageButtons.length - 1; i++) {
-        numberButtons.push(pageButtons[i]);
-    }
-}
-
-/*  
- * DOCU: Attaches click events to number buttons (1, 2, 3...).
- * @returns {void}
- */
-function attachNumberButtonEvents() {
-
-    for (let i = 0; i < numberButtons.length; i++) {
-
-        const button = numberButtons[i];
-        button.addEventListener("click", function () {
-
-            const pageNumber = Number(button.textContent);
-            renderPage(pageNumber);
-        });
-    }
-}
-
-/*  
- * DOCU: Attaches click events to previous "<" and next ">" buttons.
- * @returns {void}
- */
-function attachPrevNextEvents() {
-
-    if (prevButton) {
-        prevButton.addEventListener("click", function () {
-            renderPage(currentPage - 1);
-        });
-    }
-
-    if (nextButton) {
-        nextButton.addEventListener("click", function () {
-            renderPage(currentPage + 1);
-        });
-    }
-}
-
-/*  
- * DOCU: Renders the requested page by hiding and showing product cards.
- * @param {number} page - The page number to render.
- * @returns {void}
- */
-function renderPage(page) {
-
-    if (!Number.isFinite(page)) {
-        page = 1;
-    }
-
-    if (page < 1) {
-        page = 1;
-    }
-
-    if (page > TOTAL_PAGES) {
-        page = TOTAL_PAGES;
-    }
-
-    currentPage = page;
-
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-
-    for (let i = 0; i < productCards.length; i++) {
-
-        const shouldShow = i >= startIndex && i < endIndex;
-
-        if (shouldShow) {
-            productCards[i].style.display = "";
-        } else {
-            productCards[i].style.display = "none";
-        }
-    }
-
-    setActiveButton(currentPage);
-    updateNavigationState();
-}
-
-/*  
- * DOCU: Updates which page button is marked as active.
- * @param {number} page - Current page number.
- * @returns {void}
- */
-function setActiveButton(page) {
-
-    for (let i = 0; i < numberButtons.length; i++) {
-        numberButtons[i].classList.remove("active");
-    }
-
-    const buttonIndex = page - 1;
-
-    if (numberButtons[buttonIndex]) {
-        numberButtons[buttonIndex].classList.add("active");
-    }
-}
-
-/*  
- * DOCU: Disables prev/next buttons when at first or last page.
- * @returns {void}
- */
-function updateNavigationState() {
-
-    if (!prevButton || !nextButton) {
-        return;
-    }
-
-    prevButton.disabled = currentPage === 1;
-    nextButton.disabled = currentPage === TOTAL_PAGES;
-}
->>>>>>> 60e593c (feat: add working pagination)
+updateCartCountBadge();

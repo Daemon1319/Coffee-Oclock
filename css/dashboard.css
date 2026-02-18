@@ -1,9 +1,4 @@
-/* Prevent scrolling when a modal is open */
-body.modal-open {
-    overflow: hidden;
-}
-
-/* Blur for background when a modal is open */
+/* ============= DASHBOARD-SPECIFIC MODAL BLUR ============= */
 body.modal-open> :not(#signup-modal-container):not(#login-modal-container) {
     filter: blur(3px);
     transition: filter 0.2s ease;
@@ -13,72 +8,103 @@ body.modal-open> :not(#signup-modal-container):not(#login-modal-container) {
 main {
     display: flex;
     align-items: flex-start;
-    padding: 0 24px 24px;
-    gap: 24px;
+    gap: 26px;
+    padding: 0 24px 26px;
 }
 
-/* ============= CATEGORIES ============= */
+/* ============= CATEGORIES (DESKTOP LIKE IMAGE 1) ============= */
 .categories-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    width: 270px;
     flex-shrink: 0;
-    padding: 20px 0;
+
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid #e6d7ca;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(90, 61, 43, 0.07);
+
+    padding: 18px;
+    margin-top: 6px;
 }
 
 .categories-container h4,
 .product-container h4 {
-    margin-bottom: 20px;
+    margin-bottom: 14px;
+    color: #6f3e20;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .categories-container ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+
+    display: grid;
+    gap: 12px;
 }
 
-.categories-container li {
-    list-style: none;
-    margin-bottom: 12px;
-}
-
-.category-btn {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.categories-container li button {
     width: 100%;
-    padding: 12px 24px;
-    background-color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(111, 78, 55, 0.20);
+    color: #2F1F16;
     font-size: 12px;
+    cursor: pointer;
+    transition: transform .16s ease, background-color .16s ease, border-color .16s ease;
 }
 
-.category-icon {
-    width: 50px;
-    margin-bottom: 8px;
+.categories-container li button:hover {
+    transform: translateY(-2px);
+    border-color: #caa17d;
+    box-shadow: 0 10px 18px rgba(90, 61, 43, 0.10);
 }
 
-.status {
-    font-size: 10px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: rgb(213, 213, 255);
-    padding: 8px 3px;
-    border-radius: 50%;
+.categories-container li button span:first-child {
+    font-weight: 700;
 }
 
-/* ============= PRODUCT GRID ============= */
+.categories-container li button span:last-child {
+    min-width: 30px;
+    height: 22px;
+    padding: 0 8px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+    font-size: 12px;
+
+    background: #f2e9df;
+    color: #5A3D2B;
+}
+
+.categories-container li button.active {
+    background: #5A3D2B;
+    border-color: #5A3D2B;
+    color: #fff;
+}
+
+.categories-container li button.active span:last-child {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+/* ============= PRODUCT AREA ============= */
 .product-container {
     flex: 1;
     min-width: 0;
-    padding: 20px 0;
+
+    padding: 10px 0 0;
 }
 
 .product-header {
-    margin-bottom: 15px;
+    margin: 10px 0 14px;
 }
 
 .product-header h4 {
@@ -92,46 +118,74 @@ main {
     opacity: 0.7;
 }
 
+/* Desktop grid like image 1 */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 18px;
 }
 
+.search-empty-state {
+    grid-column: 1 / -1;
+    margin: 8px 0;
+    padding: 14px 16px;
+    border: 1px solid #ead8c8;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #6F4E37;
+    font-weight: 600;
+}
+
+/* Card style closer to image 1 */
 .product-card {
-    background: #fff;
-    border: 1px solid #e6e8ef;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ead8c8;
+    border-radius: 18px;
     overflow: hidden;
     text-decoration: none;
+    box-shadow: 0 10px 24px rgba(90, 61, 43, 0.06);
+
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 .product-thumb {
-    height: 110px;
-    background: #f4f6fb;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 18px;
+    background: transparent;
 }
 
 .product-image {
-    width: 100%;
+    width: 82%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    transition: transform 0.18s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    border-color: #caa17d;
+    box-shadow: 0 16px 32px rgba(90, 61, 43, 0.12);
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.04);
 }
 
 .product-info {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 10px 12px;
+    padding: 16px 14px 14px;
     gap: 10px;
+    color: #3e2723;
 }
 
 .product-name {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 4px;
 }
 
@@ -140,9 +194,17 @@ main {
     opacity: 0.7;
 }
 
+.product-meta .bi-star-fill {
+    color: #D4A017;
+}
+
+.product-meta .bi-star {
+    color: #cbb7a6;
+}
+
 .product-price {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     white-space: nowrap;
 }
 
@@ -151,24 +213,181 @@ main {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: 18px;
+    margin-top: 16px;
 }
 
 .page-btn {
-    border: 1px solid #cfd6e4;
-    background: white;
-    padding: 6px 12px;
-    border-radius: 6px;
+    border: 1px solid rgba(111, 78, 55, 0.20);
+    background: rgba(255, 255, 255, 0.85);
+    padding: 8px 12px;
+    border-radius: 12px;
     cursor: pointer;
+    transition: transform .16s ease, background-color .16s ease, border-color .16s ease;
+}
+
+.page-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.96);
+    border-color: rgba(111, 78, 55, 0.30);
 }
 
 .page-btn.active {
-    border-color: #2b6cb0;
-    background: #2b6cb0;
+    border-color: transparent;
+    background: linear-gradient(135deg, #6F4E37, #A68261);
     color: white;
 }
 
 .page-btn:disabled {
-    opacity: 0.5;
+    opacity: .5;
     cursor: not-allowed;
+}
+
+.add-to-cart-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 14px;
+    background: #5A3D2B;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background: #6F4E37;
+}
+
+/* =========================================================
+   RESPONSIVE REQUIREMENTS YOU SAID:
+   - categories horizontal scroll on responsive
+   - tablet = 3 cards
+   - phone  = 2 cards
+========================================================= */
+
+/* ===== TABLET (768 - 1024): 3 cards + horizontal categories ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    main {
+        flex-direction: column;
+        padding: 0 14px 18px;
+        gap: 18px;
+    }
+
+    /* categories become horizontal */
+    .categories-container {
+        width: 100%;
+        padding: 10px 0 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        margin-top: 0;
+    }
+
+    .categories-container h4 {
+        margin-bottom: 10px;
+    }
+
+    .categories-container ul {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 6px 2px 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .categories-container ul::-webkit-scrollbar {
+        display: none;
+    }
+
+    .categories-container li {
+        flex: 0 0 auto;
+    }
+
+    .categories-container li button {
+        width: auto;
+        min-width: max-content;
+        padding: 10px 14px;
+        border-radius: 999px;
+    }
+
+    /* tablet products = 3 */
+    .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ===== PHONE (<= 767): 2 cards + horizontal categories ===== */
+@media (max-width: 767px) {
+    main {
+        flex-direction: column;
+        padding: 0 14px 18px;
+        gap: 16px;
+    }
+
+    .categories-container {
+        width: 100%;
+        padding: 10px 0 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        margin-top: 0;
+    }
+
+    .categories-container h4 {
+        margin-bottom: 10px;
+    }
+
+    .categories-container ul {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 6px 2px 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .categories-container ul::-webkit-scrollbar {
+        display: none;
+    }
+
+    .categories-container li {
+        flex: 0 0 auto;
+    }
+
+    .categories-container li button {
+        width: auto;
+        min-width: max-content;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+    }
+
+    .categories-container li button span:last-child {
+        min-width: 22px;
+        height: 18px;
+        padding: 0 6px;
+        font-size: 11px;
+    }
+
+    /* phone products = 2 */
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .product-thumb {
+        height: 130px;
+    }
+}
+
+/* ===== Small Phones (<= 479): still 2 cards ===== */
+@media (max-width: 479px) {
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
 }

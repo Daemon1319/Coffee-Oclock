@@ -7,42 +7,59 @@
     <title>Product View</title>
     <link rel="stylesheet" href="css/shared-components.css">
     <link rel="stylesheet" href="css/product-view.css">
+    <link rel="stylesheet" href="css/modals/signup.css">
+    <link rel="stylesheet" href="css/modals/login.css">
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <aside>
-        <a href="dashboard.html"><img src="assets/img/beta_logo.jpg" alt="Dashboard Logo" class="official-logo"></a>
+        <a href="dashboard.html"><img src="assets/img/coffee-oclock.png" alt="Dashboard Logo" class="official-logo"></a>
 
         <nav>
             <ul>
-                <li><a href="dashboard.html"><img src="assets/icons/home-icon.svg" alt="Home icon"></a></li>
-                <li><a href="cart.html"><img src="assets/icons/cart-icon.svg" alt="Cart icon"></a></li>
+                <li><a href="dashboard.html"><img src="assets/icons/home-icon-5A3D2B.svg" alt="Home icon"></a></li>
+                <li><a href="cart.html"><img src="assets/icons/cart-icon-5A3D2B.svg" alt="Cart icon"></a></li>
             </ul>
         </nav>
     </aside>
 
+    <div class="overlay" id="overlay"></div>
+
     <div class="page-content">
         <header>
-            <div>
+            <div class="topbar">
+                <!-- LEFT: hamburger + branding -->
                 <div class="logo-container">
-                    <img src="assets/img/beta_logo.jpg" alt="Dashboard Logo" class="dashboard-logo">
-                    <p>Let's order fresh items for you.</p> <!--this is beta-->
+                    <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="dashboard-logo">
+                    <p>It's always <strong>Coffee O'clock</strong></p>
                 </div>
 
-                <div class="link-container" id="auth-links">
-                    <button type="button" class="signup-link">SIGN UP</button>
-                    <button type="button" class="login-link">LOGIN</button>
-                </div>
+                <!-- RIGHT: auth OR user -->
+                <div class="header-actions">
+                    <div class="link-container" id="auth-links">
+                        <button type="button" class="signup-link">SIGN UP</button>
+                        <button type="button" class="login-link">LOGIN</button>
+                    </div>
 
-                <!-- After the user's logged in -->
-                <div class="user-container" id="user-profile" style="display: none;">
-                    <span id="user-display-name"></span>
-                    <div class="dropdown">
-                        <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="avatar">
-                        <div class="dropdown-content" id="dropdownMenu">
-                            <button type="button" id="logout-btn">Logout</button>
+                    <div class="user-container hidden" id="user-profile">
+                        <span id="user-display-name"></span>
+                        <div class="dropdown">
+                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="avatar">
+                            <div class="dropdown-content" id="dropdownMenu">
+                                <button type="button" id="logout-btn">Logout</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,138 +68,95 @@
 
         <section class="search-container">
             <form action="">
-                <input type="text" placeholder="Search for products..." class="search-bar">
+                <div class="search-wrapper">
+                    <input type="text" id="product-search-bar" placeholder="Search for products..." class="search-bar">
+                    <div id="search-results-dropdown" class="search-results-dropdown">
+                        <!-- results -->
+                    </div>
+                </div>
             </form>
 
-            <a href="cart.html"><i class="bi bi-cart4"></i> Cart</a>
+            <a href="cart.html" class="cart-btn"><i class="bi bi-cart4"></i> Cart ( <span class="cart-count">0</span>
+                )</a>
+
         </section>
 
         <!-- unique content per page -->
         <main>
-            <a href="dashboard.html" class="return-link">Go Back</a>
             <section class="product-container">
-                <div class="product-image">
-                    <img src="assets/img/beta_logo.jpg" alt="Main Image" class="main-image" id="mainImage">
-                    <div class="sub-container">
-                        <img src="assets/img/beta_logo.jpg" alt="Sub Image 1" class="sub-image">
-                        <img src="assets/img/beta_logo.jpg" alt="Sub Image 2" class="sub-image">
-                        <img src="assets/img/beta_logo.jpg" alt="Sub Image 3" class="sub-image">
+                <a href="dashboard.html" class="return-link" aria-label="Go back">
+                    <i class="bi bi-box-arrow-left"></i>
+                </a>
+
+                <div class="product-left">
+                    <div class="image-card">
+                        <img src="assets/img/beta_logo.jpg" alt="Main Image" class="main-image" id="mainImage">
                     </div>
                 </div>
 
-                <div class="product-description">
-                    <div class="product-content">
-                        <h3 id="productName">Product Name</h3>
-                        <p id="productMeta">5 stars • 999+ Ratings</p>
-                        <h4 class="price-tag"><span id="productPrice">9999</span>$</h4>
-                        <p id="productDescription">
-                            Lorem ipsum dolor sit amet consectetur. Eget sit posuere enim
-                            facilisi. Pretium orci venenatis habitasse gravida nulla tincidunt iaculis. Aliquet at massa
-                            quisque libero viverra ut sed. Est vulputate est rutrum nunc nunc pellentesque ultrices
-                            pharetra. Mauris euismod sed vel quisque tincidunt suspendisse sed turpis volutpat. .
-                        </p>
-                    </div>
-                    <div class="purchase-function">
-                        <div class="quantity-container">
-                            <button type="button" onclick="changeQty(-1)">-</button>
-                            <input type="number" id="qty" value="1" min="1">
-                            <button type="button" onclick="changeQty(1)">+</button>
+                <div class="product-right">
+                    <div class="product-description">
+                        <div class="product-content">
+                            <div class="title-row">
+                                <h3 id="productName">Product Name</h3>
+                                <span class="price-pill">₱<span id="productPrice">9999</span></span>
+                            </div>
+
+                            <p id="productMeta">5 stars • 999+ Ratings</p>
+
+                            <p id="productDescription">
+                                Lorem ipsum dolor sit amet consectetur. Eget sit posuere enim facilisi. Pretium orci
+                                venenatis habitasse
+                                gravida nulla tincidunt iaculis. Aliquet at massa quisque libero viverra ut sed. Est
+                                vulputate est rutrum
+                                nunc nunc pellentesque ultrices pharetra. Mauris euismod sed vel quisque tincidunt
+                                suspendisse sed turpis
+                                volutpat.
+                            </p>
                         </div>
 
-                        <p class="total-amount">Total: $<span id="totalPrice">9999</span></p>
+                        <div class="purchase-function">
+                            <div class="purchase-card">
+                                <div class="purchase-group">
+                                    <p class="purchase-label">Quantity</p>
+                                    <div class="quantity-container">
+                                        <button type="button" onclick="changeQty(-1)"
+                                            aria-label="Decrease quantity">−</button>
+                                        <input type="text" id="qty" value="1" min="1" disabled>
+                                        <button type="button" onclick="changeQty(1)"
+                                            aria-label="Increase quantity">+</button>
+                                    </div>
+                                </div>
 
-                        <button type="button" class="add-cart">Add to Cart</button>
+                                <div class="purchase-group">
+                                    <p class="purchase-label">Total Amount</p>
+                                    <p class="total-amount">₱<span id="totalPrice">9999</span></p>
+                                </div>
+
+                                <button type="button" class="add-cart" onclick="addToCart()">
+                                    <i class="bi bi-bag-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+
 
             <section class="similar-items">
                 <h2>Similar Items</h2>
-                <div class="product-grid">
-                    <!-- Copy this to make new -->
-                    <a href="product-view.html" class="product-card">
-                        <div class="product-thumb">
-                            <img src="assets/img/beta_logo.jpg" alt="Product Image" class="product-image">
-                        </div>
-
-                        <div class="product-info">
-                            <div class="info-left">
-                                <h3 class="product-name">Product Name</h3>
-                                <p class="product-meta">4 stars • 36 Ratings</p>
-                            </div>
-
-                            <p class="product-price">$10</p>
-                        </div>
-                    </a>
-
-                    <!-- Copy this to make new -->
-                    <a href="product-view.html" class="product-card">
-                        <div class="product-thumb">
-                            <img src="assets/img/beta_logo.jpg" alt="Product Image" class="product-image">
-                        </div>
-
-                        <div class="product-info">
-                            <div class="info-left">
-                                <h3 class="product-name">Product Name</h3>
-                                <p class="product-meta">4 stars • 36 Ratings</p>
-                            </div>
-
-                            <p class="product-price">$10</p>
-                        </div>
-                    </a>
-
-                    <!-- Copy this to make new -->
-                    <a href="product-view.html" class="product-card">
-                        <div class="product-thumb">
-                            <img src="assets/img/beta_logo.jpg" alt="Product Image" class="product-image">
-                        </div>
-
-                        <div class="product-info">
-                            <div class="info-left">
-                                <h3 class="product-name">Product Name</h3>
-                                <p class="product-meta">4 stars • 36 Ratings</p>
-                            </div>
-
-                            <p class="product-price">$10</p>
-                        </div>
-                    </a>
-
-                    <!-- Copy this to make new -->
-                    <a href="product-view.html" class="product-card">
-                        <div class="product-thumb">
-                            <img src="assets/img/beta_logo.jpg" alt="Product Image" class="product-image">
-                        </div>
-
-                        <div class="product-info">
-                            <div class="info-left">
-                                <h3 class="product-name">Product Name</h3>
-                                <p class="product-meta">4 stars • 36 Ratings</p>
-                            </div>
-
-                            <p class="product-price">$10</p>
-                        </div>
-                    </a>
-
-                    <!-- Copy this to make new -->
-                    <a href="product-view.html" class="product-card">
-                        <div class="product-thumb">
-                            <img src="assets/img/beta_logo.jpg" alt="Product Image" class="product-image">
-                        </div>
-
-                        <div class="product-info">
-                            <div class="info-left">
-                                <h3 class="product-name">Product Name</h3>
-                                <p class="product-meta">4 stars • 36 Ratings</p>
-                            </div>
-
-                            <p class="product-price">$10</p>
-                        </div>
-                    </a>
+                <div class="similar-scroll">
+                    <div class="product-grid">
+                        <!-- dynamic similar items -->
+                    </div>
                 </div>
             </section>
+
         </main>
     </div>
 
+    <script src="js/shared.js"></script>
+    <script src="js/dashboard-modal.js"></script>
     <script src="js/products.data.js"></script>
     <script src="js/product-view.js"></script>
     <script src="js/input-validation.js"></script>

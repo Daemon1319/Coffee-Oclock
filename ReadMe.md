@@ -4,27 +4,33 @@
 project-root/
 │
 ├── dashboard.html          (Product listing, home)  //index
-├── product-view.html       (Single product page, related product)
-├── cart.html               (Cart page)
+├── product-view.html       (Single product page, related products)
+├── cart.html               (Cart page, shipping, order summary)
 │
 ├── css/
-│   ├── dashboard.css       (Main styles)
-│   ├── product-view.css
-│   ├── cart.css
-│   └── modals/             (Modal styles)
+│   ├── shared-components.css (Shared layout, overlay, modals, notifications, utilities)
+│   ├── dashboard.css         (Dashboard-specific styles)
+│   ├── product-view.css      (Product view-specific styles)
+│   ├── cart.css              (Cart-specific styles)
+│   └── modals/               (Modal styles)
 │      ├─ login.css
 │      ├─ signup.css
 │      └─ check-out.css
 │
 ├── js/
-│   ├── dashboard.js        (General functions)
-│   ├── product-view.js     (General functions)
-│   ├── cart.js             (Cart logic)
-│   ├── modal.js            (Open/close modal functions)
-│   └── input-validation.js (Input validation functions)
+│   ├── shared.js             (Shared utilities: hamburger menu, modals injection, notifications, formatPrice, getCartFromStorage)
+│   ├── dashboard.js          (Product grid, categories, search, pagination)
+│   ├── product-view.js       (Product detail, similar items, quantity, add-to-cart, search)
+│   ├── cart.js               (Cart CRUD, order summary, checkout flow)
+│   ├── cart-modal.js         (Checkout payment modal open/close)
+│   ├── dashboard-modal.js    (Signup/login modal open/close)
+│   ├── input-validation.js   (Form validation, auth UI, session, avatar dropdown, password toggle)
+│   └── products.data.js      (Product data array and helpers)
 │
 └── assets/
+     ├── img/
      ├── products/
+     │   └── product-images/
      └── icons/
 
 ```
