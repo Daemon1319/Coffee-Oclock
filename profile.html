@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/shared-components.css">
+    <link rel="stylesheet" href="css/modals/signup.css">
+    <link rel="stylesheet" href="css/modals/login.css">
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <aside>
+        <a href="dashboard.html"><img src="assets/img/coffee-oclock.png" alt="Dashboard Logo" class="official-logo"></a>
+
+        <nav>
+            <ul>
+                <li><a href="dashboard.html"><img src="assets/icons/home-icon-5A3D2B.svg" alt="Home icon"></a></li>
+                <li><a href="cart.html"><img src="assets/icons/cart-icon-5A3D2B.svg" alt="Cart icon"></a></li>
+            </ul>
+        </nav>
+    </aside>
+    <header>
+        <div class="topbar">
+            <div class="logo-container">
+                <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
+                    <i class="bi bi-list"></i>
+                </button>
+                <a href="dashboard.html"><img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="dashboard-logo"></a>
+                <p>Make time for good coffee</p>
+            </div>
+
+            <div class="header-actions">
+                <div class="user-container hidden" id="user-profile">
+                    <span id="user-display-name"></span>
+                    <div class="dropdown">
+                        <a href="profile.html"><img src="" alt="User Profile" class="avatar" id="avatar"></a>
+                        <div class="dropdown-content" id="dropdownMenu">
+                            <button type="button" id="logout-btn">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="profile-wrapper">
+
+        <section class="profile-header">
+            <div>
+                <h1 id="profile-title">My Profile</h1>
+                <p id="profile-subtitle">Manage your account information and password</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <header class="section-header">
+                <h2>Account Information</h2>
+            </header>
+
+            <form id="profileForm">
+
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" name="fullname" id="fullname" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" name="email" id="email" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" name="phone" id="phone" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" value="">
+                </div>
+
+                <button type="submit" class="btn-primary">Save Changes</button>
+
+            </form>
+        </section>
+
+        <section class="card">
+            <header class="section-header">
+                <h2>Change Password</h2>
+                <p class="hint">Use a strong password you haven't used before.</p>
+            </header>
+
+            <form id="passwordForm">
+
+                <div class="form-group">
+                    <label for="current_password">Current Password</label>
+                    <input type="password" name="current_password" id="current_password">
+                </div>
+
+                <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <input type="password" name="new_password" id="new_password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password">
+                </div>
+
+                <button type="submit" class="btn-secondary">Update Password</button>
+
+            </form>
+        </section>
+
+    </main>
+
+    <script src="js/shared.js"></script>
+    <script src="js/input-validation.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

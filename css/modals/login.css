@@ -2,17 +2,20 @@
     position: fixed;
     top: 50%;
     left: 50%;
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+
     transform: translate(-50%, -30%);
     transition: 0.45s cubic-bezier(.17, .67, .38, 1.46);
+
     background-color: #fff;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     width: 50%;
-    color: #5A3D2B;
 }
 
 #login-modal-container.show {
@@ -26,7 +29,7 @@
 #login-container {
     display: flex;
     position: relative;
-    border: 1px solid #6f4e3773;
+    border: 1px solid #a0a0a0;
     border-radius: 8px;
     gap: 30px;
     margin: auto;
@@ -38,19 +41,9 @@
     right: 10px;
     background: none;
     border: none;
-    font-size: 30px;
+    font-size: 24px;
     cursor: pointer;
     z-index: 1;
-    background: #5A3D2B;
-    border-radius: 50%;
-    width: 35px;
-    color: #F5F0EB;
-    transition: all 0.2s ease;
-}
-
-.close-btn:hover {
-    background: #7F5539;
-    transform: scale(1.05);
 }
 
 #login-container>div {
@@ -83,36 +76,38 @@
     gap: 5px;
 }
 
-#login-container>div form button:not(.toggle-password) {
+#login-container>div form button {
     align-self: center;
     padding: 10px 30px;
     border: none;
+    width: 100%;
     font-size: 16px;
     border-radius: 5px;
-    background-color: #5A3D2B;
-    color: white;
-    transition: all 0.2s ease;
 }
 
-#login-container>div form button:not(.toggle-password):hover {
+#login-container>div form button:hover {
     cursor: pointer;
-    background-color: #7F5539;
-    color: #d9ccbf;
+    background-color: rgb(220, 220, 220);
 }
 
-.login-btn {
-    width: 100%;
+.side-image,
+.brand-logo {
+    border: 1px solid red;
 }
 
 .side-image {
-    width: 30%;
+    width: 25%;
     height: 70vh;
     object-fit: cover;
     border-radius: 0 5px 5px 0;
 }
 
+.brand-logo {
+    width: 80px;
+}
+
 .login-information {
-    padding: 3em 0px 2em 30px;
+    padding: 40px;
     width: 70%;
 }
 
@@ -122,13 +117,12 @@
 }
 
 .input-group input {
-    width: 100%;
-    padding: 16px 60px 16px 10px;
+    width: 96%;
+    padding: 16px 10px;
     font-size: 16px;
-    border: 1px solid #7F5539;
+    border: 1px solid black;
     border-radius: 5px;
     outline: none;
-    box-sizing: border-box;
 }
 
 .input-group label {
@@ -148,28 +142,8 @@
 .input-group input:valid+label {
     top: -4px;
     font-size: 13px;
-    color: #5A3D2B;
-    background-color: #F5F0EB;
+    color: black;
 }
-
-#login-container .input-group .error {
-    display: block;
-    min-height: 16px;
-    margin-top: 6px;
-    font-size: 12px;
-    line-height: 1.2;
-    color: #B42318;
-    visibility: hidden;
-}
-
-#login-container .input-group .error.show {
-    visibility: visible;
-}
-
-#login-container .input-group.has-error input {
-    border-color: #B42318;
-}
-
 
 .underline {
     margin: 1em 0;
@@ -182,135 +156,17 @@
 }
 
 .login-text h2 {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .login-text button {
     border: none;
     background: none;
-    margin: 2em 0;
-    font-size: 14px;
-    color: #5A3D2B;
-    text-decoration: underline;
+    font-size: 16px;
 }
 
 .login-text button:hover {
     text-decoration: underline;
     cursor: pointer;
 }
-
-.password-input {
-    position: relative;
-}
-
-
-
-/* Responsive Design */
-
-/* Mobile devices (up to 768px) */
-@media (max-width: 768px) {
-    #login-modal-container {
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-
-    #login-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    #login-container img {
-        display: none;
-    }
-
-    .login-information {
-        padding: 1em;
-        width: 100%;
-    }
-
-    #login-container>div>div {
-        flex-direction: column;
-    }
-
-    #login-container>div {
-        gap: 0;
-        padding: 2em 1em;
-    }
-
-    .input-group input {
-        width: 100%;
-        padding: 12px 5em 12px 10px;
-        font-size: 14px;
-    }
-
-    .input-group label {
-        font-size: 14px;
-    }
-
-    .input-group input:focus+label,
-    .input-group input:valid+label {
-        font-size: 12px;
-    }
-
-    #login-container>div form {
-        gap: 0;
-    }
-
-    #login-container>div form button:not(.toggle-password) {
-        padding: 8px 20px;
-        font-size: 14px;
-    }
-
-    .login-text h2 {
-        font-size: 24px;
-    }
-
-    .login-text button {
-        font-size: 12px;
-        margin: 10px 0 3em;
-    }
-
-    .brand-logo {
-        width: 60px;
-    }
-
-    .close-btn {
-        font-size: 24px;
-        width: 30px;
-    }
-
-    .toggle-password {
-        right: 10px;
-        top: 12px;
-        font-size: 12px;
-    }
-}
-
-/* Tablet devices (769px to 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    #login-modal-container {
-        width: 70%;
-    }
-
-    #login-container {
-        gap: 20px;
-    }
-
-    .side-image {
-        width: 35%;
-    }
-
-    .login-information {
-        padding: 2em 0px 2em 20px;
-        width: 65%;
-    }
-
-    .input-group input {
-        width: 95%;
-        padding: 14px 10px;
-    }
-}
-
-/* Desktop devices (above 1024px) - default styles already apply */
