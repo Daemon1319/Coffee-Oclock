@@ -177,6 +177,7 @@ header>div {
 /* ============= SEARCH BAR & CART ============= */
 .search-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 35px 25px 25px;
     gap: 12px;

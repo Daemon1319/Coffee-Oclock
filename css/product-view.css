@@ -135,6 +135,16 @@ main {
     color: rgba(43, 31, 24, 0.6);
 }
 
+#productMeta .bi-star-fill,
+.product-meta .bi-star-fill {
+    color: #D4A017;
+}
+
+#productMeta .bi-star,
+.product-meta .bi-star {
+    color: #cbb7a6;
+}
+
 #productDescription {
     margin: 0;
     font-size: 15px;

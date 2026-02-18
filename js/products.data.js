@@ -258,16 +258,28 @@ function findProductById(productId) {
 }
 
 function generateStars(productId) {
-    return (productId % 5) + 1;
+    return (productId % 3) + 3;
 }
 
 function generateRatings(productId) {
     return ((productId * 73) % 300) + 1;
 }
 
+function renderStarsHTML(starCount) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+        html += i <= starCount
+            ? '<i class="bi bi-star-fill"></i>'
+            : '<i class="bi bi-star"></i>';
+    }
+    return html;
+}
+
 PRODUCTS.forEach(function (product) {
     if (typeof product.stars !== "number") {
         product.stars = generateStars(product.id);
+    } else {
+        product.stars = Math.min(5, Math.max(3, product.stars));
     }
 
     if (typeof product.ratings !== "number") {

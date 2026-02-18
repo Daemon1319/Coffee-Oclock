@@ -7,13 +7,13 @@
  * Last Updated By: Janverly  
  */
 const cartContainer = document.getElementById('cartContainer');
-const itemCountEl = document.getElementById('itemCount'); 
-const shippingFeeEl = document.getElementById('shippingFee'); 
-const totalAmountCart = document.getElementById('total-amount'); 
-const totalAmountModal = document.getElementById('total-amount-modal'); 
-const totalAmountEl = document.getElementById('totalAmount'); 
-const checkoutBtn = document.getElementById('checkoutBtn'); 
-const searchInput = document.querySelector('.search-bar'); 
+const itemCountEl = document.getElementById('itemCount');
+const shippingFeeEl = document.getElementById('shippingFee');
+const totalAmountCart = document.getElementById('total-amount');
+const totalAmountModal = document.getElementById('total-amount-modal');
+const totalAmountEl = document.getElementById('totalAmount');
+const checkoutBtn = document.getElementById('checkoutBtn');
+const searchInput = document.querySelector('.search-bar');
 const modalContainer = document.getElementById('check-out-modal-container');
 const modalCloseBtn = modalContainer.querySelector('.close-btn');
 
@@ -71,7 +71,7 @@ if (shippingInfoForm) {
  */
 function stringToNumber(str) {
     if (typeof str === 'number') return str;
-    return parseFloat(str.replace('₱','').replace('$','').replace(/,/g,'')) || 0;
+    return parseFloat(str.replace('₱', '').replace('$', '').replace(/,/g, '')) || 0;
 }
 
 function numberToCurrency(num) {
@@ -263,10 +263,20 @@ if (cardNameInput) {
 // cart logic
 function loadCart() {
     const cart = getCartFromStorage();
+    const params = new URLSearchParams(window.location.search);
+    const userName = params.get('user');
+    const dashboardHref = userName
+        ? `dashboard.html?user=${encodeURIComponent(userName)}`
+        : 'dashboard.html';
     cartContainer.innerHTML = '';
 
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<p class="empty-cart-msg">Your cart is empty.</p>';
+        cartContainer.innerHTML = `
+            <div class="empty-cart-state">
+                <p class="empty-cart-msg">Nothing here yet. Start ordering.</p>
+                <a href="${dashboardHref}" class="cart-btn">See our Menu</a>
+            </div>
+        `;
         updateOrderSummary();
         return;
     }
@@ -363,14 +373,15 @@ cartContainer.addEventListener('click', e => {
     if (e.target.classList.contains('qty-btn-minus') || e.target.textContent === "-" || e.target.textContent === "−") {
         if (qty <= 1) return;
         updateCartStorage(index, qty - 1);
-    } 
+    }
     else if (e.target.classList.contains('qty-btn-plus') || e.target.textContent === "+") {
         updateCartStorage(index, qty + 1);
-    } 
+    }
     else if (e.target.classList.contains('cart-remove-btn') || e.target.textContent === "×") { // &times; is ×
+        const itemName = cartItem.querySelector('h3')?.textContent?.trim() || "this item";
         showNotification(
-            "Remove Item",
-            "Are you sure you want to remove this item from your cart?",
+            "Remove Drink",
+            `Are you sure you want to remove ${itemName} from your cart?`,
             "warning",
             function () {
                 updateCartStorage(index, 0, true); // explicit removal
@@ -397,7 +408,7 @@ searchInput.addEventListener('input', e => {
 
 //payment notif success
 if (paymentForm) {
-    paymentForm.addEventListener('submit', function(e) {
+    paymentForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         if (!validatePaymentForm()) {
@@ -405,7 +416,7 @@ if (paymentForm) {
         }
 
         modalContainer.style.display = 'none';
-        document.body.classList.remove('modal-open');       
+        document.body.classList.remove('modal-open');
 
         // Clear cart
         clearCartStorage();
@@ -434,7 +445,7 @@ function checkUrlForNewItem() {
         }
 
         const product = findProductById(id);
-        
+
         if (product) {
             let cart = getCartFromStorage();
             const existingProductIndex = cart.findIndex(item => item.id === product.id);
@@ -452,7 +463,7 @@ function checkUrlForNewItem() {
             }
             setCartToStorage(cart);
             updateCartCountBadge();
-            
+
             const url = new URL(window.location);
             url.searchParams.delete('action');
             url.searchParams.delete('id');
