@@ -166,7 +166,19 @@ header>div {
     cursor: pointer;
 }
 
-.user-dropdown-menu button:hover {
+.user-dropdown-menu a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.user-dropdown-menu button:hover,
+.user-dropdown-menu a:hover {
     background-color: #f2f2f2;
 }
 

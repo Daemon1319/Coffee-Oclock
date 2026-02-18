@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>My Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/profile.css">
     <link rel="stylesheet" href="css/shared-components.css">
     <link rel="stylesheet" href="css/modals/signup.css">
@@ -22,31 +25,39 @@
             </ul>
         </nav>
     </aside>
-    <header>
-        <div class="topbar">
-            <div class="logo-container">
-                <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
-                    <i class="bi bi-list"></i>
-                </button>
-                <a href="dashboard.html"><img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="dashboard-logo"></a>
-                <p>Make time for good coffee</p>
-            </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-            <div class="header-actions">
-                <div class="user-container hidden" id="user-profile">
-                    <span id="user-display-name"></span>
-                    <div class="dropdown">
-                        <a href="profile.html"><img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="user-avatar"></a>
-                        <div class="dropdown-content" id="user-dropdown-menu">
-                            <button type="button" id="logout-btn">Logout</button>
+    <div class="page-content">
+        <header>
+            <div class="topbar">
+                <div class="logo-container">
+                    <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <img src="assets/icons/coffee-gif.gif" alt="Dashboard Logo" class="brand-icon">
+                    <p>It's always <strong>Coffee O'clock</strong></p>
+                </div>
+
+                <div class="header-actions">
+                    <div class="auth-link-container" id="auth-links">
+                        <button type="button" class="signup-link">SIGN UP</button>
+                        <button type="button" class="login-link">LOGIN</button>
+                    </div>
+
+                    <div class="user-container hidden" id="user-profile">
+                        <span id="user-display-name"></span>
+                        <div class="user-dropdown">
+                            <img src="assets/img/beta_logo.jpg" alt="User Profile" class="avatar" id="user-avatar">
+                            <div class="user-dropdown-menu" id="user-dropdown-menu">
+                                <button type="button" id="logout-btn">Logout</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main class="profile-wrapper">
+        <main class="profile-wrapper">
 
         <section class="profile-header">
             <div>
@@ -91,22 +102,22 @@
             <form id="passwordForm">
 
                 <div class="input-group">
-                    <input type="password" name="current_password" id="current_password">
                     <label for="current_password">Current Password</label>
+                    <input type="password" name="current_password" id="current_password">
                     <button type="button" class="toggle-password" data-target="current_password">Show</button>
                     <small class="error"></small>
                 </div>
 
                 <div class="input-group">
-                    <input type="password" name="new_password" id="new_password">
                     <label for="new_password">New Password</label>
+                    <input type="password" name="new_password" id="new_password">
                     <button type="button" class="toggle-password" data-target="new_password">Show</button>
                     <small class="error"></small>
                 </div>
 
                 <div class="input-group">
-                    <input type="password" name="confirm_password" id="confirm_password">
                     <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password">
                     <button type="button" class="toggle-password" data-target="confirm_password">Show</button>
                     <small class="error"></small>
                 </div>
@@ -116,7 +127,8 @@
             </form>
         </section>
 
-    </main>
+        </main>
+    </div>
 
     <script src="js/shared.js"></script>
     <script src="js/input-validation.js"></script>

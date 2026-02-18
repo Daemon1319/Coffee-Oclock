@@ -314,16 +314,42 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Avatar dropdown
+    // Avatar dropdown (works across pages with different wrappers)
     const avatar = document.getElementById("user-avatar");
     const dropdownMenu = document.getElementById("user-dropdown-menu");
+    const userDisplayName = document.getElementById("user-display-name");
+
     if (avatar && dropdownMenu) {
-        avatar.addEventListener("click", function (e) {
-            e.stopPropagation();
+        const dropdownWrapper = avatar.closest(".user-dropdown") || avatar.closest(".dropdown") || avatar.parentElement;
+
+        function toggleUserDropdown(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
             dropdownMenu.classList.toggle("show");
+        }
+
+        avatar.addEventListener("click", toggleUserDropdown);
+
+        if (userDisplayName) {
+            userDisplayName.addEventListener("click", toggleUserDropdown);
+        }
+
+        dropdownMenu.addEventListener("click", function (e) {
+            e.stopPropagation();
         });
-        document.addEventListener("click", function () {
-            dropdownMenu.classList.remove("show");
+
+        document.addEventListener("click", function (e) {
+            if (!dropdownWrapper || !dropdownWrapper.contains(e.target)) {
+                dropdownMenu.classList.remove("show");
+            }
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                dropdownMenu.classList.remove("show");
+            }
         });
     }
 
