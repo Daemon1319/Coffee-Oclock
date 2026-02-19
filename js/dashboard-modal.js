@@ -1,4 +1,4 @@
-/*
+﻿/*
  * DOCU: Handles opening and closing of signup/login modals.
  * Deferred to DOMContentLoaded since modals are injected dynamically by shared.js.
  *
@@ -27,8 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
      * Last Updated By: Jheanne A. Salan  
      */
     function hideModals() {
-        if (signupModal) signupModal.classList.remove('show');
-        if (loginModal) loginModal.classList.remove('show');
+        if (signupModal) {
+            signupModal.classList.remove('show');
+        }
+        if (loginModal) {
+            loginModal.classList.remove('show');
+        }
         document.body.classList.remove('modal-open');
     }
 
@@ -82,10 +86,18 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function initializeModalEvents() {
         hideModals();
-        if (signupBtn) signupBtn.addEventListener('click', showSignupModal);
-        if (loginBtn) loginBtn.addEventListener('click', showLoginModal);
-        if (toLoginBtn) toLoginBtn.addEventListener('click', showLoginModal);
-        if (toSignupBtn) toSignupBtn.addEventListener('click', showSignupModal);
+        if (signupBtn) {
+            signupBtn.addEventListener('click', showSignupModal);
+        }
+        if (loginBtn) {
+            loginBtn.addEventListener('click', showLoginModal);
+        }
+        if (toLoginBtn) {
+            toLoginBtn.addEventListener('click', showLoginModal);
+        }
+        if (toSignupBtn) {
+            toSignupBtn.addEventListener('click', showSignupModal);
+        }
         closeButtons.forEach(function (btn) {
             btn.addEventListener('click', hideModals);
         });
