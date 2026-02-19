@@ -1,4 +1,4 @@
-﻿// Constant
+// Constant
 const CART_URL_PARAM = 'cart';
 
 // Event Trigger
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /*  
  * DOCU: Formats a number as a Philippine Peso currency string.
  * @param {number} amount - The numeric amount.
- * @returns {string} - Formatted string like "â‚±100.00".
+ * @returns {string} - Formatted string like "₱100.00".
  * @throws {None} - No exceptions.
  *  
  * Last Updated: 2026-02-15
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
  * Last Updated by: Kerzania
  */
 function formatPrice(amount) {
-    return `â‚±${Number(amount).toFixed(2)}`;
+    return `₱${Number(amount).toFixed(2)}`;
 }
 
 /*  

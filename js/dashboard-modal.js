@@ -1,4 +1,4 @@
-﻿/*
+/*
  * DOCU: Handles opening and closing of signup/login modals.
  * Deferred to DOMContentLoaded since modals are injected dynamically by shared.js.
  *

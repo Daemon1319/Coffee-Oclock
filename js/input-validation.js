@@ -1,4 +1,4 @@
-﻿/*
+/*
  * DOCU: Handles input validation, user session via URL parameters,
  * form feedback, UI updates, logout, and dropdown/password toggle.
  * Deferred to DOMContentLoaded since modals are injected by shared.js.
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const firstName = email.value.split("@")[0];
-
+            
             // Save mock user info to sessionStorage for prefilling profile
             const userData = {
                 firstName: firstName,
@@ -347,7 +347,7 @@ function updateAuthUI() {
         if (userDisplayName) {
             userDisplayName.textContent = currentUser.firstName;
         }
-
+        
         // Ensure "My Profile" link exists in dropdown
         const dropdownMenu = document.getElementById("user-dropdown-menu") || document.getElementById("dropdownMenu");
         if (dropdownMenu && !document.getElementById("profile-link")) {
@@ -356,7 +356,7 @@ function updateAuthUI() {
             profileLink.href = "profile.html";
             profileLink.textContent = "My Profile";
             dropdownMenu.insertBefore(profileLink, dropdownMenu.firstChild);
-
+            
             // Re-run updateLinksWithUser to ensure the new link has the user param
             updateLinksWithUser();
         }
