@@ -1,4 +1,4 @@
-﻿/*
+/*
  * DOCU: Handles prefilling and updating user profile information.
  * It retrieves user data from sessionStorage and populates the profile form.
  *

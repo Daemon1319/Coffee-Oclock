@@ -1,4 +1,4 @@
-﻿/* CONSTANTS */
+/* CONSTANTS */
 const mainImage = document.getElementById("mainImage");
 const productName = document.getElementById("productName");
 const productMeta = document.getElementById("productMeta");
@@ -117,7 +117,7 @@ function displaySelectedProduct() {
     mainImage.classList.add("main-image")
 
     productName.innerText = product.name;
-    productMeta.innerHTML = `${renderStarsHTML(product.stars)} â€¢ ${product.ratings} Ratings`;
+    productMeta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
     productPrice.innerText = Number(product.price).toFixed(2);
     updateTotalPrice();
     updateQuantityControls();
@@ -219,14 +219,14 @@ function createProductCard(product) {
 
     const meta = document.createElement("p");
     meta.classList.add("product-meta");
-    meta.innerHTML = `${renderStarsHTML(product.stars ?? 0)} â€¢ ${product.ratings ?? 0} Ratings`;
+    meta.innerHTML = `${renderStarsHTML(product.stars ?? 0)} • ${product.ratings ?? 0} Ratings`;
 
     infoDetails.appendChild(name);
     infoDetails.appendChild(meta);
 
     const price = document.createElement("p");
     price.classList.add("product-price");
-    price.innerText = `â‚±${Number(product.price || 0).toFixed(2)}`;
+    price.innerText = `₱${Number(product.price || 0).toFixed(2)}`;
 
     infoDiv.appendChild(infoDetails);
     infoDiv.appendChild(price);

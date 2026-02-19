@@ -1,4 +1,4 @@
-﻿// Constants
+// Constants
 const cartModal = document.getElementById('check-out-modal-container');
 const cartBtn = document.getElementById('checkoutBtn');
 const closeCartBtn = cartModal ? cartModal.querySelector('.close-btn') : null;
