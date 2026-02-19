@@ -1,4 +1,4 @@
-/*
+﻿/*
  * DOCU: Handles input validation, user session via URL parameters,
  * form feedback, UI updates, logout, and dropdown/password toggle.
  * Deferred to DOMContentLoaded since modals are injected by shared.js.
@@ -66,7 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 isValid = confirmPassword.value === password.value ? clearError(confirmPassword) && isValid : showError(confirmPassword, "Passwords do not match") && isValid;
             }
 
-            if (!isValid) return;
+            if (!isValid) {
+                return;
+            }
 
             // Save user info to sessionStorage for prefilling profile
             const userData = {
@@ -93,10 +95,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const password = document.getElementById("login-password");
 
             let isValid = validateEmail(email) && validatePassword(password);
-            if (!isValid) return;
+            if (!isValid) {
+                return;
+            }
 
             const firstName = email.value.split("@")[0];
-            
+
             // Save mock user info to sessionStorage for prefilling profile
             const userData = {
                 firstName: firstName,
@@ -171,7 +175,9 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleButtons.forEach(function (button) {
         button.addEventListener("click", function () {
             const input = document.getElementById(this.dataset.target);
-            if (!input) return;
+            if (!input) {
+                return;
+            }
             if (input.type === "password") {
                 input.type = "text";
                 this.textContent = "Hide";
@@ -224,7 +230,9 @@ function showError(input, message) {
         error.classList.add("show");
     }
 
-    if (inputGroup) inputGroup.classList.add("has-error");
+    if (inputGroup) {
+        inputGroup.classList.add("has-error");
+    }
     input.classList.add("is-invalid");
     return false;
 }
@@ -247,7 +255,9 @@ function clearError(input) {
         error.classList.remove("show");
     }
 
-    if (inputGroup) inputGroup.classList.remove("has-error");
+    if (inputGroup) {
+        inputGroup.classList.remove("has-error");
+    }
     input.classList.remove("is-invalid");
     return true;
 }
@@ -265,8 +275,12 @@ function validateEmail(emailInput) {
     const value = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    if (value === "") return showError(emailInput, "Email is required");
-    if (!emailRegex.test(value)) return showError(emailInput, "Enter a valid email (e.g., user@example.com)");
+    if (value === "") {
+        return showError(emailInput, "Email is required");
+    }
+    if (!emailRegex.test(value)) {
+        return showError(emailInput, "Enter a valid email (e.g., user@example.com)");
+    }
     return clearError(emailInput);
 }
 
@@ -277,7 +291,9 @@ function validateEmail(emailInput) {
  * @returns {boolean} - Returns true if valid, false otherwise.
  */
 function validateRequired(input, message) {
-    if (input.value.trim() === "") return showError(input, message);
+    if (input.value.trim() === "") {
+        return showError(input, message);
+    }
     return clearError(input);
 }
 
@@ -322,10 +338,16 @@ function updateAuthUI() {
     const userDisplayName = document.getElementById("user-display-name");
 
     if (currentUser) {
-        if (authLinks) authLinks.classList.add("hidden");
-        if (userProfile) userProfile.classList.remove("hidden");
-        if (userDisplayName) userDisplayName.textContent = currentUser.firstName;
-        
+        if (authLinks) {
+            authLinks.classList.add("hidden");
+        }
+        if (userProfile) {
+            userProfile.classList.remove("hidden");
+        }
+        if (userDisplayName) {
+            userDisplayName.textContent = currentUser.firstName;
+        }
+
         // Ensure "My Profile" link exists in dropdown
         const dropdownMenu = document.getElementById("user-dropdown-menu") || document.getElementById("dropdownMenu");
         if (dropdownMenu && !document.getElementById("profile-link")) {
@@ -334,13 +356,17 @@ function updateAuthUI() {
             profileLink.href = "profile.html";
             profileLink.textContent = "My Profile";
             dropdownMenu.insertBefore(profileLink, dropdownMenu.firstChild);
-            
+
             // Re-run updateLinksWithUser to ensure the new link has the user param
             updateLinksWithUser();
         }
     } else {
-        if (authLinks) authLinks.classList.remove("hidden");
-        if (userProfile) userProfile.classList.add("hidden");
+        if (authLinks) {
+            authLinks.classList.remove("hidden");
+        }
+        if (userProfile) {
+            userProfile.classList.add("hidden");
+        }
     }
 }
 

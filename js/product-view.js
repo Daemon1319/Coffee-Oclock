@@ -1,4 +1,4 @@
-/* CONSTANTS */
+﻿/* CONSTANTS */
 const mainImage = document.getElementById("mainImage");
 const productName = document.getElementById("productName");
 const productMeta = document.getElementById("productMeta");
@@ -23,7 +23,9 @@ const decreaseQtyBtn = document.getElementById("qty-decrease-btn");
 function getProductIdFromURL() {
     const query = window.location.search; //output sample: "?id=2"
 
-    if (!query) return null;
+    if (!query) {
+        return null;
+    }
 
     const queryParts = query.substring(1).split("&");
     for (let i = 0; i < queryParts.length; i++) {
@@ -83,7 +85,9 @@ function updateTotalPrice() {
 * Author: Kerzania  
 */
 function updateQuantityControls() {
-    if (!decreaseQtyBtn) return;
+    if (!decreaseQtyBtn) {
+        return;
+    }
     decreaseQtyBtn.disabled = getQty() <= 1;
 }
 
@@ -113,7 +117,7 @@ function displaySelectedProduct() {
     mainImage.classList.add("main-image")
 
     productName.innerText = product.name;
-    productMeta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
+    productMeta.innerHTML = `${renderStarsHTML(product.stars)} â€¢ ${product.ratings} Ratings`;
     productPrice.innerText = Number(product.price).toFixed(2);
     updateTotalPrice();
     updateQuantityControls();
@@ -142,7 +146,9 @@ function displaySimilarItems() {
     const grid = document.querySelector(".similar-items .product-grid");
     const section = document.querySelector(".similar-items");
 
-    if (!grid) return;
+    if (!grid) {
+        return;
+    }
 
     //clear placeholder content first
     grid.innerHTML = "";
@@ -151,7 +157,9 @@ function displaySimilarItems() {
     const selectedProduct = findProductById(productId);
 
     if (!selectedProduct) {
-        if (section) section.style.display = "none";
+        if (section) {
+            section.style.display = "none";
+        }
         return;
     }
 
@@ -164,7 +172,9 @@ function displaySimilarItems() {
     });
 
     if (similarProducts.length === 0) {
-        if (section) section.style.display = "none";
+        if (section) {
+            section.style.display = "none";
+        }
         return;
     }
 
@@ -209,14 +219,14 @@ function createProductCard(product) {
 
     const meta = document.createElement("p");
     meta.classList.add("product-meta");
-    meta.innerHTML = `${renderStarsHTML(product.stars ?? 0)} • ${product.ratings ?? 0} Ratings`;
+    meta.innerHTML = `${renderStarsHTML(product.stars ?? 0)} â€¢ ${product.ratings ?? 0} Ratings`;
 
     infoDetails.appendChild(name);
     infoDetails.appendChild(meta);
 
     const price = document.createElement("p");
     price.classList.add("product-price");
-    price.innerText = `₱${Number(product.price || 0).toFixed(2)}`;
+    price.innerText = `â‚±${Number(product.price || 0).toFixed(2)}`;
 
     infoDiv.appendChild(infoDetails);
     infoDiv.appendChild(price);
@@ -311,7 +321,9 @@ function addToCart() {
 
 function getQty() {
     const qtyInput = document.getElementById("product-qty");
-    if (!qtyInput) return 1;
+    if (!qtyInput) {
+        return 1;
+    }
 
     return Math.max(1, parseInt(qtyInput.value, 10) || 1);
 }
@@ -328,7 +340,9 @@ function getQty() {
  */
 function changeQty(step) {
     const qtyInput = document.getElementById("product-qty");
-    if (!qtyInput) return;
+    if (!qtyInput) {
+        return;
+    }
 
     const currentQty = getQty();
     const nextQty = Math.max(1, currentQty + step);
@@ -354,7 +368,9 @@ updateQuantityControls();
     const searchBar = document.getElementById('product-search-bar');
     const searchResultsDropdown = document.getElementById('search-results-dropdown');
 
-    if (!searchBar || !searchResultsDropdown) return;
+    if (!searchBar || !searchResultsDropdown) {
+        return;
+    }
 
     /*  
      * DOCU: Searches products by name based on the query string.
@@ -362,7 +378,9 @@ updateQuantityControls();
      * @returns {Array} - Array of matching products.
      */
     function searchProducts(query) {
-        if (!query || query.trim() === '') return [];
+        if (!query || query.trim() === '') {
+            return [];
+        }
 
         const lowerQuery = query.toLowerCase().trim();
         return PRODUCTS.filter(function (product) {

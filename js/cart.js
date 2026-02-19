@@ -1,4 +1,4 @@
-// Constants
+﻿// Constants
 const cartContainer = document.getElementById('cartContainer');
 const itemCountEl = document.getElementById('itemCount');
 const shippingFeeEl = document.getElementById('shippingFee');
@@ -88,7 +88,9 @@ if (cardNameInput) {
 }
 
 [cardNameInput, cardNumberInput, expirationInput, cvcInput].forEach((input) => {
-    if (!input) return;
+    if (!input) {
+        return;
+    }
     input.addEventListener('blur', function () {
         validatePaymentForm();
     });
@@ -105,20 +107,24 @@ if (checkoutMethodInputs.length > 0) {
 // Cart quantity & remove
 cartContainer.addEventListener('click', e => {
     const cartItem = e.target.closest('.cart-item');
-    if (!cartItem) return;
+    if (!cartItem) {
+        return;
+    }
 
     const index = parseInt(cartItem.dataset.index);
     const qtyEl = cartItem.querySelector('.cart-qty-value');
     let qty = parseInt(qtyEl.value) || 1;
 
-    if (e.target.classList.contains('qty-btn-minus') || e.target.textContent === "-" || e.target.textContent === "−") {
-        if (qty <= 1) return;
+    if (e.target.classList.contains('qty-btn-minus') || e.target.textContent === "-" || e.target.textContent === "âˆ’") {
+        if (qty <= 1) {
+            return;
+        }
         updateCartStorage(index, qty - 1);
     }
     else if (e.target.classList.contains('qty-btn-plus') || e.target.textContent === "+") {
         updateCartStorage(index, qty + 1);
     }
-    else if (e.target.classList.contains('cart-remove-btn') || e.target.textContent === "×") { // &times; is ×
+    else if (e.target.classList.contains('cart-remove-btn') || e.target.textContent === "Ã—") { // &times; is Ã—
         const itemName = cartItem.querySelector('h3')?.textContent?.trim() || "this item";
         showNotification(
             "Remove Drink",
@@ -195,25 +201,27 @@ loadCart();
 
 
 /*  
- * DOCU: Convert a currency string like "₱100.00" to a number 100  
+ * DOCU: Convert a currency string like "â‚±100.00" to a number 100  
  * @param {string} str - Currency string to convert  
  * @returns {number} - Numeric value of the currency  
  */
 function stringToNumber(str) {
-    if (typeof str === 'number') return str;
-    return parseFloat(str.replace('₱', '').replace('$', '').replace(/,/g, '')) || 0;
+    if (typeof str === 'number') {
+        return str;
+    }
+    return parseFloat(str.replace('â‚±', '').replace('$', '').replace(/,/g, '')) || 0;
 }
 
 /*  
  * DOCU: Converts a number to a Philippine Peso currency string.
  * @param {number} num - The numeric amount to format.
- * @returns {string} - Formatted currency string (e.g., "₱100.00").
+ * @returns {string} - Formatted currency string (e.g., "â‚±100.00").
  *
  * Last Updated: 2026-02-18  
  * Author: Kerzania  
  */
 function numberToCurrency(num) {
-    return `₱${num.toFixed(2)}`;
+    return `â‚±${num.toFixed(2)}`;
 }
 
 /*  
@@ -251,7 +259,9 @@ function formatCardNumber(value) {
  */
 function formatExpiration(value) {
     const digits = digitsOnly(value).slice(0, 4);
-    if (digits.length <= 2) return digits;
+    if (digits.length <= 2) {
+        return digits;
+    }
     return `${digits.slice(0, 2)}/${digits.slice(2)}`;
 }
 
@@ -271,7 +281,9 @@ function luhnCheck(cardDigits) {
         let digit = parseInt(cardDigits.charAt(i), 10);
         if (shouldDouble) {
             digit *= 2;
-            if (digit > 9) digit -= 9;
+            if (digit > 9) {
+                digit -= 9;
+            }
         }
 
         sum += digit;
@@ -291,7 +303,9 @@ function luhnCheck(cardDigits) {
  * Author: Kerzania  
  */
 function validateCardName() {
-    if (!cardNameInput) return true;
+    if (!cardNameInput) {
+        return true;
+    }
 
     const value = cardNameInput.value.trim();
     cardNameInput.setCustomValidity('');
@@ -318,7 +332,9 @@ function validateCardName() {
  * Author: Kerzania  
  */
 function validateCardNumber() {
-    if (!cardNumberInput) return true;
+    if (!cardNumberInput) {
+        return true;
+    }
 
     const digits = digitsOnly(cardNumberInput.value);
     cardNumberInput.setCustomValidity('');
@@ -350,7 +366,9 @@ function validateCardNumber() {
  * Author: Kerzania  
  */
 function validateExpiration() {
-    if (!expirationInput) return true;
+    if (!expirationInput) {
+        return true;
+    }
 
     const value = expirationInput.value.trim();
     expirationInput.setCustomValidity('');
@@ -390,7 +408,9 @@ function validateExpiration() {
  * Author: Kerzania  
  */
 function validateCvc() {
-    if (!cvcInput) return true;
+    if (!cvcInput) {
+        return true;
+    }
 
     const digits = digitsOnly(cvcInput.value);
     cvcInput.setCustomValidity('');
@@ -477,7 +497,9 @@ function isCardMethod(method) {
  */
 function setCardFieldRequired(isRequired) {
     [cardNameInput, cardNumberInput, expirationInput, cvcInput].forEach((input) => {
-        if (!input) return;
+        if (!input) {
+            return;
+        }
         input.required = isRequired;
         input.setCustomValidity('');
     });
@@ -493,7 +515,9 @@ function setCardFieldRequired(isRequired) {
  */
 function clearCardFields() {
     [cardNameInput, cardNumberInput, expirationInput, cvcInput].forEach((input) => {
-        if (!input) return;
+        if (!input) {
+            return;
+        }
         input.value = '';
         input.setCustomValidity('');
     });
@@ -583,7 +607,7 @@ function loadCart() {
             <img src="${item.image}" alt="${item.name}">
             <div class="cart-item-info">
                 <h3>${item.name}</h3>
-                <span class="cart-item-price">₱${Number(item.price).toFixed(2)}</span>
+                <span class="cart-item-price">â‚±${Number(item.price).toFixed(2)}</span>
             </div>
             <div class="cart-qty">
                 <label>Quantity</label>
@@ -593,7 +617,7 @@ function loadCart() {
             </div>
             <div class="cart-item-total">
                 <label>Total</label>
-                <span>₱${(item.price * safeQty).toFixed(2)}</span>
+                <span>â‚±${(item.price * safeQty).toFixed(2)}</span>
             </div>
             <button type="button" class="cart-remove-btn">&times;</button>
         `;
@@ -648,12 +672,14 @@ function updateOrderSummary() {
         const qtyEl = item.querySelector('.cart-qty-value');
         const priceEl = item.querySelector('.cart-item-price');
         const totalEl = item.querySelector('.cart-item-total span');
-        if (!qtyEl || !priceEl || !totalEl) return;
+        if (!qtyEl || !priceEl || !totalEl) {
+            return;
+        }
 
         let qty = parseInt(qtyEl.value) || 1; // Changed to .value for input
         const price = stringToNumber(priceEl.textContent);
 
-        totalEl.textContent = `₱${(price * qty).toFixed(2)}`;
+        totalEl.textContent = `â‚±${(price * qty).toFixed(2)}`;
 
         itemCount += qty;
         subtotal += price * qty;
@@ -662,10 +688,18 @@ function updateOrderSummary() {
     const appliedShippingFee = itemCount >= 1 ? SHIPPING_FEE : 0;
     const total = subtotal + appliedShippingFee;
 
-    if (itemCountEl) itemCountEl.textContent = itemCount;
-    if (shippingFeeEl) shippingFeeEl.textContent = numberToCurrency(appliedShippingFee);
-    if (totalAmountModal) totalAmountModal.textContent = numberToCurrency(total);
-    if (totalAmountEl) totalAmountEl.textContent = numberToCurrency(total);
+    if (itemCountEl) {
+        itemCountEl.textContent = itemCount;
+    }
+    if (shippingFeeEl) {
+        shippingFeeEl.textContent = numberToCurrency(appliedShippingFee);
+    }
+    if (totalAmountModal) {
+        totalAmountModal.textContent = numberToCurrency(total);
+    }
+    if (totalAmountEl) {
+        totalAmountEl.textContent = numberToCurrency(total);
+    }
 }
 
 /*
@@ -724,7 +758,7 @@ function checkUrlForNewItem() {
 function forceNavLinksTransparent() {
     const links = document.querySelectorAll('aside nav ul li a[href="dashboard.html"]');
     links.forEach(link => {
-        link.style.backgroundColor = "transparent"; 
+        link.style.backgroundColor = "transparent";
     });
 }
 

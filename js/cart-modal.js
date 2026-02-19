@@ -1,11 +1,13 @@
-// Constants
+﻿// Constants
 const cartModal = document.getElementById('check-out-modal-container');
 const cartBtn = document.getElementById('checkoutBtn');
 const closeCartBtn = cartModal ? cartModal.querySelector('.close-btn') : null;
 const shippingForm = document.getElementById('shippingForm');
 
 function validateShippingField(input) {
-    if (!input) return true;
+    if (!input) {
+        return true;
+    }
 
     const value = input.value.trim();
     const fieldName = input.getAttribute('name');
@@ -16,7 +18,9 @@ function validateShippingField(input) {
         return false;
     }
 
-    if (!value) return true;
+    if (!value) {
+        return true;
+    }
 
     const nameFields = ['firstName', 'lastName', 'city', 'province'];
     if (nameFields.includes(fieldName) && !/^[A-Za-z ]+$/.test(value)) {
@@ -33,7 +37,9 @@ function validateShippingField(input) {
 }
 
 function validateShippingForm() {
-    if (!shippingForm) return true;
+    if (!shippingForm) {
+        return true;
+    }
 
     const fields = shippingForm.querySelectorAll('input');
     let isValid = true;

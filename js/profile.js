@@ -1,4 +1,4 @@
-/*
+﻿/*
  * DOCU: Handles prefilling and updating user profile information.
  * It retrieves user data from sessionStorage and populates the profile form.
  *
@@ -44,21 +44,33 @@ document.addEventListener("DOMContentLoaded", function () {
      * 
      */
     function prefillForm(data) {
-        if (!data) return;
-        
+        if (!data) {
+            return;
+        }
+
         let fname = data.firstName;
         let lname = data.lastName;
-        
+
         // If fields are empty but fullName exists, try to derive them
         if ((!fname || !lname) && data.fullName) {
             const parts = data.fullName.trim().split(/\s+/);
-            if (!fname) fname = parts[0] || "";
-            if (!lname) lname = parts.slice(1).join(" ") || "";
+            if (!fname) {
+                fname = parts[0] || "";
+            }
+            if (!lname) {
+                lname = parts.slice(1).join(" ") || "";
+            }
         }
 
-        if (firstNameInput) firstNameInput.value = fname || "";
-        if (lastNameInput) lastNameInput.value = lname || "";
-        if (emailInput) emailInput.value = data.email || "";
+        if (firstNameInput) {
+            firstNameInput.value = fname || "";
+        }
+        if (lastNameInput) {
+            lastNameInput.value = lname || "";
+        }
+        if (emailInput) {
+            emailInput.value = data.email || "";
+        }
     }
 
     // Execute prefill
@@ -68,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (profileForm) {
         profileForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            
+
             if (!userData && !userNameParam) {
                 showNotification("Error", "You must be logged in to update your profile.", "error");
                 return;
@@ -83,11 +95,11 @@ document.addEventListener("DOMContentLoaded", function () {
             };
 
             sessionStorage.setItem("organic_shop_user", JSON.stringify(updatedUser));
-            
+
             // Re-sync the userData variable
             userData = updatedUser;
 
-            showNotification("Success", "Account information updated successfully!", "success", function() {
+            showNotification("Success", "Account information updated successfully!", "success", function () {
                 // If first name changed, we need to update the URL to maintain "session"
                 const currentUrl = new URL(window.location.href);
                 if (currentUrl.searchParams.get("user") !== updatedUser.firstName) {
@@ -102,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (passwordForm) {
         passwordForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            
+
             const currentPassInput = document.getElementById("current_password");
             const newPassInput = document.getElementById("new_password");
             const confirmPassInput = document.getElementById("confirm_password");
@@ -118,37 +130,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // 1. Basic required validation
             if (!currentPassInput.value) {
-                if (typeof showError === "function") showError(currentPassInput, "Current password is required");
+                if (typeof showError === "function") {
+                    showError(currentPassInput, "Current password is required");
+                }
                 isValid = false;
             }
             if (!newPassInput.value) {
-                if (typeof showError === "function") showError(newPassInput, "New password is required");
+                if (typeof showError === "function") {
+                    showError(newPassInput, "New password is required");
+                }
                 isValid = false;
             }
             if (!confirmPassInput.value) {
-                if (typeof showError === "function") showError(confirmPassInput, "Confirm password is required");
+                if (typeof showError === "function") {
+                    showError(confirmPassInput, "Confirm password is required");
+                }
                 isValid = false;
             }
 
-            if (!isValid) return;
+            if (!isValid) {
+                return;
+            }
 
             // 2. Validate current password against actual password
             // Fallback to "password123" if no password was stored yet
             const actualPassword = userData && userData.password ? userData.password : "password123";
-            
+
             if (currentPassInput.value !== actualPassword) {
-                if (typeof showError === "function") showError(currentPassInput, "Incorrect current password");
+                if (typeof showError === "function") {
+                    showError(currentPassInput, "Incorrect current password");
+                }
                 return;
             }
 
             // 3. New password validation
             if (newPassInput.value !== confirmPassInput.value) {
-                if (typeof showError === "function") showError(confirmPassInput, "Passwords do not match");
+                if (typeof showError === "function") {
+                    showError(confirmPassInput, "Passwords do not match");
+                }
                 return;
             }
 
             if (newPassInput.value.length < 6) {
-                if (typeof showError === "function") showError(newPassInput, "Must be at least 6 characters");
+                if (typeof showError === "function") {
+                    showError(newPassInput, "Must be at least 6 characters");
+                }
                 return;
             }
 
@@ -158,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 sessionStorage.setItem("organic_shop_user", JSON.stringify(userData));
             }
 
-            showNotification("Success", "Password updated successfully!", "success", function() {
+            showNotification("Success", "Password updated successfully!", "success", function () {
                 passwordForm.reset();
             });
         });

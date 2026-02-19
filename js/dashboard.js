@@ -1,4 +1,4 @@
-// Constants
+﻿// Constants
 const productContainer = document.querySelector(".product-grid");
 const productLength = document.querySelector(".count");
 const paginationContainer = document.querySelector(".pagination");
@@ -28,7 +28,9 @@ updateCartCountBadge();
  * Last Updated By: Jheanne Salan  
  */
 function renderCategories() {
-    if (!categoryList) return;
+    if (!categoryList) {
+        return;
+    }
 
     const categories = { all: { count: 0 } }; // Added ALL as a category
 
@@ -161,7 +163,9 @@ function searchFilter() {
  * Last Updated By: Kerzania  
  */
 function renderNoSearchResults(searchValue) {
-    if (!productContainer) return;
+    if (!productContainer) {
+        return;
+    }
 
     productContainer.innerHTML = "";
 
@@ -194,7 +198,9 @@ function renderNoSearchResults(searchValue) {
  */
 function renderProducts(products) {
 
-    if (!productContainer) return;
+    if (!productContainer) {
+        return;
+    }
 
     // Clear existing products first if there is (for safety)
     productContainer.innerHTML = "";
@@ -231,8 +237,8 @@ function renderProducts(products) {
         image.src = product.image || DEFAULT_PRODUCT_IMAGE_SRC;
         image.alt = product.name;
         name.innerText = product.name;
-        meta.innerHTML = `${renderStarsHTML(product.stars)} • ${product.ratings} Ratings`;
-        price.innerText = `₱${Number(product.price).toFixed(2)}`;
+        meta.innerHTML = `${renderStarsHTML(product.stars)} â€¢ ${product.ratings} Ratings`;
+        price.innerText = `â‚±${Number(product.price).toFixed(2)}`;
         addToCartBtn.innerHTML = '<i class="bi bi-cup-hot"></i> Add to Order';
         addToCartBtn.setAttribute("aria-label", `Add ${product.name} to order`);
         addToCartBtn.addEventListener("click", function (event) {
@@ -351,8 +357,12 @@ function goToPage(page, productList) {
     const totalPages = Math.ceil(products.length / PAGE_SIZE);
 
     //keep page within valid range
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
+    if (page < 1) {
+        page = 1;
+    }
+    if (page > totalPages) {
+        page = totalPages;
+    }
 
     const startIndex = (page - 1) * PAGE_SIZE;
     const pageProducts = products.slice(startIndex, startIndex + PAGE_SIZE);

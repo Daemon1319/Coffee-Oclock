@@ -1,4 +1,4 @@
-// Constant
+﻿// Constant
 const CART_URL_PARAM = 'cart';
 
 // Event Trigger
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /*  
  * DOCU: Formats a number as a Philippine Peso currency string.
  * @param {number} amount - The numeric amount.
- * @returns {string} - Formatted string like "₱100.00".
+ * @returns {string} - Formatted string like "â‚±100.00".
  * @throws {None} - No exceptions.
  *  
  * Last Updated: 2026-02-15
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
  * Last Updated by: Kerzania
  */
 function formatPrice(amount) {
-    return `₱${Number(amount).toFixed(2)}`;
+    return `â‚±${Number(amount).toFixed(2)}`;
 }
 
 /*  
@@ -38,7 +38,9 @@ function getCartFromStorage() {
     const params = new URLSearchParams(window.location.search);
     const rawCart = params.get(CART_URL_PARAM);
 
-    if (!rawCart) return [];
+    if (!rawCart) {
+        return [];
+    }
 
     const trimmed = rawCart.trim();
     const looksLikeArray = trimmed.startsWith('[') && trimmed.endsWith(']');
@@ -107,9 +109,13 @@ function syncCartParamToLinks() {
 
     document.querySelectorAll('a[href]').forEach(function (link) {
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('#')) return;
+        if (!href || href.startsWith('#')) {
+            return;
+        }
 
-        if (typeof URL.canParse === 'function' && !URL.canParse(href, window.location.origin)) return;
+        if (typeof URL.canParse === 'function' && !URL.canParse(href, window.location.origin)) {
+            return;
+        }
 
         const url = new URL(href, window.location.origin);
         if (url.protocol !== window.location.protocol || url.host !== window.location.host) {
@@ -157,7 +163,9 @@ function getCartItemCount() {
  */
 function updateCartCountBadge() {
     const cartCountElements = document.querySelectorAll('.cart-count');
-    if (!cartCountElements.length) return;
+    if (!cartCountElements.length) {
+        return;
+    }
 
     const itemCount = getCartItemCount();
     cartCountElements.forEach(function (el) {
@@ -209,7 +217,9 @@ function initHamburgerMenu() {
  */
 function initSideNavActiveState() {
     const navLinks = document.querySelectorAll('aside nav ul li a[href]');
-    if (!navLinks.length) return;
+    if (!navLinks.length) {
+        return;
+    }
 
     const currentPage = (window.location.pathname.split('/').pop() || '').toLowerCase();
 
@@ -259,7 +269,9 @@ function showNotification(title, message, type, onClose, options) {
 
     // Remove any existing notification
     const existing = document.getElementById("notification-modal");
-    if (existing) existing.remove();
+    if (existing) {
+        existing.remove();
+    }
 
     // Create overlay
     const overlay = document.createElement("div");
