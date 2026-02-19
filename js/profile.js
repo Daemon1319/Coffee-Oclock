@@ -3,7 +3,7 @@
  * It retrieves user data from sessionStorage and populates the profile form.
  *
  * Last Updated: 2026-02-18
- * Author: Antigravity
+ * Author: Errol
  */
 
 document.addEventListener("DOMContentLoaded", function () {
