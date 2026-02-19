@@ -106,6 +106,7 @@ function clearCartStorage() {
 function syncCartParamToLinks() {
     const currentUrl = new URL(window.location.href);
     const cartValue = currentUrl.searchParams.get(CART_URL_PARAM);
+    const userValue = currentUrl.searchParams.get('user');
 
     document.querySelectorAll('a[href]').forEach(function (link) {
         const href = link.getAttribute('href');
@@ -126,6 +127,12 @@ function syncCartParamToLinks() {
             url.searchParams.set(CART_URL_PARAM, cartValue);
         } else {
             url.searchParams.delete(CART_URL_PARAM);
+        }
+
+        if (userValue) {
+            url.searchParams.set('user', userValue);
+        } else {
+            url.searchParams.delete('user');
         }
 
         link.href = url.toString();

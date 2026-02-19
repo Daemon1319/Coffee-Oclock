@@ -181,6 +181,8 @@ function displaySimilarItems() {
     similarProducts.forEach(function (product) {
         grid.appendChild(createProductCard(product));
     });
+
+    syncCartParamToLinks();
 }
 
 /*  
@@ -435,6 +437,7 @@ updateQuantityControls();
         });
 
         searchResultsDropdown.style.display = 'block';
+        syncCartParamToLinks();
     }
 
     searchBar.addEventListener('input', function (e) {

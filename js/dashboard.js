@@ -373,6 +373,7 @@ function goToPage(page, productList) {
 
     renderProducts(pageProducts);
     renderPagination(totalPages, page, products);
+    syncCartParamToLinks();
 }
 
 
