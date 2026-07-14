@@ -1,36 +1,23 @@
-# Organic Shop Repo Project Structure
+# Coffee O'clock
 
-```
-project-root/
-│
-├── dashboard.html          (Product listing, home)  //index
-├── product-view.html       (Single product page, related products)
-├── cart.html               (Cart page, shipping, order summary)
-│
-├── css/
-│   ├── shared-components.css (Shared layout, overlay, modals, notifications, utilities)
-│   ├── dashboard.css         (Dashboard-specific styles)
-│   ├── product-view.css      (Product view-specific styles)
-│   ├── cart.css              (Cart-specific styles)
-│   └── modals/               (Modal styles)
-│      ├─ login.css
-│      ├─ signup.css
-│      └─ check-out.css
-│
-├── js/
-│   ├── shared.js             (Shared utilities: hamburger menu, modals injection, notifications, formatPrice, getCartFromStorage)
-│   ├── dashboard.js          (Product grid, categories, search, pagination)
-│   ├── product-view.js       (Product detail, similar items, quantity, add-to-cart, search)
-│   ├── cart.js               (Cart CRUD, order summary, checkout flow)
-│   ├── cart-modal.js         (Checkout payment modal open/close)
-│   ├── dashboard-modal.js    (Signup/login modal open/close)
-│   ├── input-validation.js   (Form validation, auth UI, session, avatar dropdown, password toggle)
-│   └── products.data.js      (Product data array and helpers)
-│
-└── assets/
-     ├── img/
-     ├── products/
-     │   └── product-images/
-     └── icons/
+A responsive e-commerce storefront built with **vanilla HTML, CSS, and JavaScript**. Features a full shopping flow — product browsing with category filters and pagination, individual product views with similar item recommendations, a cart with quantity management and shipping form, and a checkout modal.
 
-```
+## Key Features
+
+- **Product Dashboard** — Category-filtered product grid with live search, star ratings, and client-side pagination
+- **Product Detail View** — Full product page with quantity selector, dynamic pricing, and similar items carousel
+- **Shopping Cart** — Persistent cart via localStorage with quantity controls, shipping form validation, and real-time order summary
+- **Auth System** — Signup/login modals with form validation, session persistence, avatar dropdown, and profile management with password change
+
+## Tech Stack
+
+HTML5 · CSS3 · Vanilla JavaScript · Bootstrap Icons · Google Fonts (Montserrat) · localStorage
+
+## Pages
+
+| Page         | File                | Description                                              |
+| ------------ | ------------------- | -------------------------------------------------------- |
+| Dashboard    | `dashboard.html`    | Product grid, category filter, search, pagination        |
+| Product View | `product-view.html` | Product detail, quantity selector, similar items         |
+| Cart         | `cart.html`         | Cart items, shipping form, order summary, checkout modal |
+| Profile      | `profile.html`      | Account info editor, password change                     |
